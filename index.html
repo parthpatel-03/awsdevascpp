@@ -265,110 +265,74 @@
   </style>
 </head>
 <script>
-  // --- CONFIGURATION ---
-  const REPO_OWNER = "parthpatel-03"; // <--- CHANGE THIS
-  const REPO_NAME = "study.vault";
+  // HARDCODED START
+  const REPO_OWNER = "parthpatel-03"; 
+  const REPO_NAME = "study.vault"; 
   const FILE_PATH = "progress.json";
-  
-  // --- APP STATE ---
+  // --- END CONFIG ---
+
   let GITHUB_TOKEN = localStorage.getItem('gh_token') || "";
   let currentSha = "";
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
   async function initialize() {
-    if (!GITHUB_TOKEN) {
-      GITHUB_TOKEN = prompt("Please enter your GitHub Personal Access Token:");
-      if (!GITHUB_TOKEN) return alert("System won't work without a token.");
-      localStorage.setItem('gh_token', GITHUB_TOKEN);
+    // If it's not working, force a new token entry
+    if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 10) {
+      GITHUB_TOKEN = prompt("PASTE THE NEW CLASSIC TOKEN HERE:");
+      if (GITHUB_TOKEN) localStorage.setItem('gh_token', GITHUB_TOKEN.trim());
     }
-    await loadData();
+    loadData();
   }
 
   async function loadData() {
-    console.log("Attempting to load...");
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
-    
+    console.log("FINAL ATTEMPT URL:", url);
+
     try {
       const response = await fetch(url, {
-        headers: { "Authorization": `Beacon ${GITHUB_TOKEN}`, "Accept": "application/vnd.github.v3+json" }
+        headers: { "Authorization": `token ${GITHUB_TOKEN}` }
       });
 
-      if (!response.ok) {
-        if (response.status === 401) {
-          alert("Error 401: Invalid Token. Clearing saved key...");
-          localStorage.removeItem('gh_token');
-        } else if (response.status === 404) {
-          alert(`Error 404: File not found at ${REPO_OWNER}/${REPO_NAME}/${FILE_PATH}`);
+      if (response.ok) {
+        const data = await response.json();
+        currentSha = data.sha;
+        const content = JSON.parse(atob(data.content));
+        document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
+          cb.checked = content.includes(i);
+        });
+        console.log("IT WORKED!");
+      } else {
+        const errorDetail = await response.text();
+        console.error("STILL FAILING. Code:", response.status);
+        console.error("RESPONSE TEXT:", errorDetail);
+        
+        if(response.status === 404) {
+             alert("STILL 404. Let's try one more thing: Go to your Private repo and check the URL bar. Does it say 'study.vault' or 'study-vault'?");
         }
-        return;
       }
-
-      const data = await response.json();
-      currentSha = data.sha; 
-      
-      // Decode the Base64 content from GitHub safely
-      const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
-      
-      checkboxes.forEach((cb, i) => {
-        cb.checked = content.includes(i);
-      });
-      console.log("Load successful. SHA:", currentSha);
     } catch (err) {
-      alert("Network error while loading: " + err.message);
+      console.error("NETWORK ERROR:", err);
     }
   }
 
   async function saveData() {
-    if (!currentSha) {
-      console.log("No SHA ready, re-loading...");
-      await loadData();
-    }
-
-    const checkedIndices = [];
-    checkboxes.forEach((cb, i) => { if (cb.checked) checkedIndices.push(i); });
+    const checked = [];
+    document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { if(cb.checked) checked.push(i); });
     
-    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
-    const body = {
-      message: "Update progress from Web App",
-      content: btoa(unescape(encodeURIComponent(JSON.stringify(checkedIndices)))),
-      sha: currentSha
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: "PUT",
-        headers: { 
-          "Authorization": `token ${GITHUB_TOKEN}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        currentSha = result.content.sha;
-        console.log("Save successful! New SHA:", currentSha);
-      } else {
-        console.error("Save Error:", result);
-        alert("Save failed: " + (result.message || "Unknown error"));
-        // If it's a conflict (409), reload the SHA
-        if (response.status === 409) await loadData();
-      }
-    } catch (err) {
-      alert("Network error while saving: " + err.message);
-    }
+    await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+      method: "PUT",
+      headers: { "Authorization": `token ${GITHUB_TOKEN}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: "sync",
+        content: btoa(JSON.stringify(checked)),
+        sha: currentSha
+      })
+    }).then(r => r.json()).then(d => { 
+        currentSha = d.content.sha;
+        console.log("SAVED");
+    });
   }
 
-  // Attach event listeners
-  checkboxes.forEach(cb => {
-    cb.addEventListener('change', () => {
-      console.log("Checkbox changed, saving...");
-      saveData();
-    });
-  });
-
-  // Start the app
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', saveData));
   initialize();
 </script>
   <body>
