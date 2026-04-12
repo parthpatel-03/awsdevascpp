@@ -264,7 +264,61 @@
     }
   </style>
 </head>
+<script>
+  let GITHUB_TOKEN = ""; 
+  const REPO_OWNER = "parthpatel-03";
+  const REPO_NAME = "study.data";
+  const FILE_PATH = "progress.json";
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
+  async function initialize() {
+    // This asks for your secret key every time you open the site.
+    // It is never saved in the code, making it secure.
+    GITHUB_TOKEN = prompt("Please enter your GitHub Private Key:");
+    if (!GITHUB_TOKEN) return alert("Key required to sync progress.");
+    loadFromGithub();
+  }
+
+  async function loadFromGithub() {
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
+    const response = await fetch(url, {
+      headers: { "Authorization": `token ${GITHUB_TOKEN}` }
+    });
+    const data = await response.json();
+    const content = JSON.parse(atob(data.content)); // Decode Base64 from GitHub
+    
+    content.forEach(index => {
+      if(checkboxes[index]) checkboxes[index].checked = true;
+    });
+    window.file_sha = data.sha; // Save this for updating later
+  }
+
+  async function saveToGithub() {
+    const checkedIndices = [];
+    checkboxes.forEach((cb, i) => { if (cb.checked) checkedIndices.push(i); });
+    
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
+    const body = {
+      message: "update progress",
+      content: btoa(JSON.stringify(checkedIndices)), // Encode to Base64
+      sha: window.file_sha
+    };
+
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: { 
+        "Authorization": `token ${GITHUB_TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+    const result = await response.json();
+    window.file_sha = result.content.sha; // Update SHA for next save
+  }
+
+  checkboxes.forEach(cb => cb.addEventListener('change', saveToGithub));
+  initialize();
+</script>
 <body>
   <div class="wrap">
     <header>
