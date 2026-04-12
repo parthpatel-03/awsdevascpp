@@ -274,25 +274,26 @@
 
   async function initialize() {
     if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 10) {
-      const input = prompt("Please paste your NEW Classic GitHub Token (ghp_...):");
+      const input = prompt("Paste your GitHub Classic Token (ghp_...):");
       if (input) {
         GITHUB_TOKEN = input.trim();
         localStorage.setItem('gh_token', GITHUB_TOKEN);
       }
     }
-    loadData();
+    await loadData();
   }
 
   async function loadData() {
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
-    
+    console.log("Loading from GitHub...");
+
     try {
       const response = await fetch(url, {
         headers: { "Authorization": `token ${GITHUB_TOKEN}` }
       });
 
       if (response.status === 401) {
-        alert("Token invalid (401). Clearing saved key. Please refresh and enter the new Classic Token.");
+        alert("Bad token. Clearing and reloading...");
         localStorage.removeItem('gh_token');
         return;
       }
@@ -301,48 +302,65 @@
         const data = await response.json();
         currentSha = data.sha;
         const content = JSON.parse(atob(data.content));
+        
         document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
           cb.checked = content.includes(i);
         });
-        console.log("Sync Successful!");
-      } else {
-        console.error("Error:", response.status);
+        console.log("Loaded! SHA:", currentSha, "Checked:", content);
       }
     } catch (err) {
-      console.error("Connection failed:", err);
+      console.error("Load error:", err);
     }
   }
 
   async function saveData() {
-    if (!currentSha) return;
+    if (!currentSha) {
+      console.warn("No SHA yet, reloading...");
+      await loadData();
+      return;
+    }
+
+    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     const checked = [];
-    document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { if(cb.checked) checked.push(i); });
-    
+    allCheckboxes.forEach((cb, i) => { if (cb.checked) checked.push(i); });
+    console.log("Saving indices:", checked);
+
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
-    const body = {
-      message: "Syncing Study Progress",
-      content: btoa(JSON.stringify(checked)),
-      sha: currentSha
-    };
 
-    const resp = await fetch(url, {
-      method: "PUT",
-      headers: { 
-        "Authorization": `token ${GITHUB_TOKEN}`,
-        "Content-Type": "application/json" 
-      },
-      body: JSON.stringify(body)
-    });
+    try {
+      const resp = await fetch(url, {
+        method: "PUT",
+        headers: { 
+          "Authorization": `token ${GITHUB_TOKEN}`,
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify({
+          message: "Syncing Study Progress",
+          content: btoa(JSON.stringify(checked)),
+          sha: currentSha
+        })
+      });
 
-    if (resp.ok) {
-      const d = await resp.json();
-      currentSha = d.content.sha;
-      console.log("Progress Saved to Private Repo.");
+      if (resp.ok) {
+        const d = await resp.json();
+        currentSha = d.content.sha;
+        console.log("SAVED successfully!");
+      } else {
+        const err = await resp.json();
+        console.error("Save failed:", err.message);
+        if (resp.status === 409) await loadData();
+      }
+    } catch (err) {
+      console.error("Save network error:", err);
     }
   }
 
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', saveData);
+  // Event Delegation - catches ALL checkbox clicks on the page
+  document.addEventListener('change', function(event) {
+    if (event.target.type === 'checkbox') {
+      console.log("Checkbox changed, saving...");
+      saveData();
+    }
   });
 
   initialize();
