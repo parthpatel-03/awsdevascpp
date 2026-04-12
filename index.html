@@ -1,0 +1,1171 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AWS DVA-C02 Course Plan (Apr 12–May 16, 2026)</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#111b2e;
+      --panel2:#0f172a;
+      --text:#e6edf7;
+      --muted:#a9b4c7;
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --ok:#34d399;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 8px 24px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius2: 12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1200px 700px at 15% 5%, rgba(124,58,237,.25), transparent 60%),
+                  radial-gradient(900px 600px at 80% 20%, rgba(14,165,233,.20), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.35;
+    }
+    a{color:var(--accent)}
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px 16px 60px;
+    }
+    header{
+      padding:18px 18px 16px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    h1{margin:0 0 6px; font-size:20px; letter-spacing:.2px}
+    .sub{color:var(--muted); margin:0; font-size:13px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background:rgba(17,27,46,.70);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+      padding:12px 12px 10px;
+    }
+    .kpi{grid-column: span 4;}
+    .kpi .label{color:var(--muted); font-size:12px}
+    .kpi .val{font-size:18px; margin-top:4px}
+    .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--text);
+      background:rgba(15,23,42,.65);
+    }
+    .pill.ok{border-color: rgba(52,211,153,.35); background:rgba(52,211,153,.08)}
+    .pill.warn{border-color: rgba(251,191,36,.35); background:rgba(251,191,36,.08)}
+    .pill.info{border-color: rgba(125,211,252,.35); background:rgba(125,211,252,.08)}
+    .pill.purple{border-color: rgba(167,139,250,.35); background:rgba(167,139,250,.08)}
+    .section-title{
+      margin:18px 2px 10px;
+      font-size:14px;
+      color:var(--muted);
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
+    details{
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      background:rgba(17,27,46,.55);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    details + details{margin-top:10px}
+    summary{
+      cursor:pointer;
+      padding:12px 12px;
+      list-style:none;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      user-select:none;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+      border-bottom:1px solid var(--line);
+      font-weight:600;
+    }
+    summary::-webkit-details-marker{display:none}
+    .badge{
+      font-family:var(--mono);
+      font-size:12px;
+      padding:3px 8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:var(--muted);
+      background:rgba(15,23,42,.55);
+    }
+    .content{padding:12px}
+    .two{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 920px){
+      .kpi{grid-column: span 6;}
+      .two{grid-template-columns:1fr}
+    }
+    @media (max-width: 560px){
+      .kpi{grid-column: span 12;}
+    }
+    ul{margin:8px 0 0 18px; color:var(--text)}
+    li{margin:6px 0}
+    .muted{color:var(--muted)}
+    .plan{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .day{
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      background:rgba(15,23,42,.55);
+      padding:12px;
+    }
+    .dayhead{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+      flex-wrap:wrap;
+    }
+    .dayname{font-weight:700}
+    .timebox{
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid var(--line);
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(17,27,46,.55);
+    }
+    .targets{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:8px;
+    }
+    .taskrow{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:6px;
+      padding:10px;
+      border:1px dashed rgba(255,255,255,.16);
+      border-radius:12px;
+      background:rgba(17,27,46,.35);
+    }
+    .tasktitle{
+      font-weight:650;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .hint{color:var(--muted); font-size:12px}
+    .checks{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap:8px;
+      margin-top:6px;
+    }
+    @media (max-width: 820px){
+      .checks{grid-template-columns: repeat(2, minmax(160px, 1fr));}
+    }
+    @media (max-width: 460px){
+      .checks{grid-template-columns: 1fr;}
+    }
+    label.chk{
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      font-size:12.5px;
+      color:var(--text);
+      padding:7px 8px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:rgba(15,23,42,.40);
+    }
+    input[type="checkbox"]{
+      margin-top:2px;
+      accent-color: var(--accent);
+    }
+    .smallnote{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:8px;
+    }
+    .rulebox{
+      border:1px solid rgba(125,211,252,.25);
+      background:rgba(125,211,252,.06);
+      border-radius:12px;
+      padding:10px;
+      color:var(--text);
+    }
+    .rulebox strong{color:var(--accent)}
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(15,23,42,.45);
+    }
+    th, td{
+      padding:10px;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+      font-size:12.5px;
+    }
+    th{
+      text-align:left;
+      color:var(--muted);
+      background:rgba(17,27,46,.55);
+      font-weight:650;
+    }
+    tr:last-child td{border-bottom:none}
+    .printnote{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    @media print{
+      body{background:#fff; color:#000}
+      header, .card, details, .day{box-shadow:none}
+      .wrap{max-width:100%; padding:0}
+      .pillrow{display:none}
+      .printnote{display:none}
+      summary{background:#f4f4f4}
+      .badge, .timebox{border-color:#ccc; color:#333}
+      .muted{color:#333}
+      .rulebox{border-color:#777}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>AWS Certified Developer Associate — Daily Plan (from your Udemy CSV)</h1>
+      <p class="sub">
+        You’ve completed through <strong>Section 8</strong>. Target: finish course by <strong>Apr 30, 2026</strong>, then practice-exam cycle <strong>May 1–May 15</strong>, exam ideally <strong>May 16, 2026</strong>.
+      </p>
+
+      <div class="grid" aria-label="Key metrics">
+        <div class="card kpi">
+          <div class="label">Remaining timed video/article content</div>
+          <div class="val"><strong>~25.7 hours</strong> (1544 min)</div>
+          <div class="hint">Quizzes/practice test time not included in CSV.</div>
+        </div>
+        <div class="card kpi">
+          <div class="label">Available time Apr 12–Apr 30 (your commitment)</div>
+          <div class="val"><strong>~36.0 hours</strong></div>
+          <div class="hint">Assumes weekdays ~1.5h, weekends 3h.</div>
+        </div>
+        <div class="card kpi">
+          <div class="label">Hands-on factor (built into this plan)</div>
+          <div class="val"><strong>~1.4× avg</strong></div>
+          <div class="hint">Generous but still realistic within your time budget.</div>
+        </div>
+      </div>
+
+      <div class="pillrow">
+        <span class="pill ok">Rule: If short on time, do videos first; push hands-on to weekend catch-up.</span>
+        <span class="pill info">Rule: Quizzes are diagnostic — take them same day as the section.</span>
+        <span class="pill purple">Rule: Build an “Error Log” from May 1 onward and review daily.</span>
+        <span class="pill warn">Milestone: Schedule exam by Apr 20 (reduces uncertainty + forces pacing).</span>
+      </div>
+    </header>
+
+    <div class="section-title">How to execute each study session (simple + repeatable)</div>
+    <div class="card">
+      <div class="two">
+        <div class="rulebox">
+          <strong>Weekday default (1–2h):</strong>
+          <ul>
+            <li><strong>60–80 min</strong> focused watching (pause → paraphrase)</li>
+            <li><strong>20–35 min</strong> hands-on (timeboxed)</li>
+            <li><strong>10 min</strong> recall: write “5 bullets from memory”</li>
+            <li><strong>Quiz</strong> if you completed the section</li>
+          </ul>
+        </div>
+        <div class="rulebox">
+          <strong>Weekend default (3h):</strong>
+          <ul>
+            <li><strong>90–120 min</strong> content</li>
+            <li><strong>60–75 min</strong> hands-on (complete labs end-to-end)</li>
+            <li><strong>20–30 min</strong> quiz + review wrong answers</li>
+            <li><strong>10 min</strong> add 3–5 flashcards (only from mistakes/confusions)</li>
+          </ul>
+        </div>
+      </div>
+      <p class="smallnote">
+        Hands-on means: actually click through AWS console/CLI steps, reproduce what the instructor does, and verify outputs.
+        If a lab is long, stop when you can explain the “why” and can redo the key steps without the video.
+      </p>
+    </div>
+
+    <div class="section-title">Phase A — Finish all course content (Apr 12–Apr 29)</div>
+    <details open>
+      <summary>
+        <span class="badge">Phase A</span>
+        Course completion plan (sections 9–34)
+        <span class="badge">includes timeboxed hands-on</span>
+      </summary>
+      <div class="content">
+        <div class="plan">
+
+          <!-- APR 12 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 12 (Sun)</div>
+              <div class="timebox">Budget: 3h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 9 (Route 53) + Quiz 6</div>
+                <div class="hint">Hands-on focus: health checks + routing policies summary (simple vs weighted vs latency vs failover).</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 6 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 10 (VPC Fundamentals) + Quiz 7</div>
+                <div class="hint">Output: 1-page VPC cheat sheet (subnets, IGW/NAT, NACL vs SG, endpoints).</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Cheat sheet created</label>
+                  <label class="chk"><input type="checkbox"> Quiz 7 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 13 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 13 (Mon)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 11 (S3 Introduction) + Quiz 8</div>
+                <div class="hint">Hands-on focus: bucket policy basics + static website hosting + versioning + replication.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 8 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 14 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 14 (Tue)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 12 (CLI/SDK/IAM Roles & Policies) + Quiz 9</div>
+                <div class="hint">Hands-on focus: instance metadata + credential provider chain + MFA profiles (timebox).</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 9 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 13 (Advanced S3) + Quiz 10</div>
+                <div class="hint">Hands-on focus: event notifications + lifecycle rules; know when each is used.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 10 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 15 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 15 (Wed)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 14 (S3 Security) + Quiz 11</div>
+                <div class="hint">Hands-on focus: encryption (SSE-S3/SSE-KMS/DSSE-KMS), CORS, presigned URLs, access points.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 11 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 16 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 16 (Thu)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 15 (CloudFront) + Quiz 12</div>
+                <div class="hint">Hands-on focus: caching policies + invalidations; signed URLs/cookies; origins (S3 vs ALB/EC2).</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 12 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 17 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 17 (Fri)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Start + continue: Section 16 (ECS/ECR/Fargate) — Part 1</div>
+                <div class="hint">Hands-on focus: cluster + service + task definition basics. Stop when you can explain task vs service vs cluster.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Part 1 videos done</label>
+                  <label class="chk"><input type="checkbox"> Part 1 hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Notes (task/service/cluster)</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 18 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 18 (Sat)</div>
+              <div class="timebox">Budget: 3h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 16 (ECS/ECR/Fargate) + Quiz 13</div>
+                <div class="hint">Hands-on: ECR push/pull, cleanup; understand ECS auto scaling + rolling updates at a high level.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 13 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Start: Section 17 (Elastic Beanstalk) — quick progress</div>
+                <div class="hint">Goal: get through overview + first environment setup if time remains.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Started section</label>
+                  <label class="chk"><input type="checkbox"> Environment created</label>
+                  <label class="chk"><input type="checkbox"> Key terms captured</label>
+                  <label class="chk"><input type="checkbox"> Timeboxed (no rabbit holes)</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 19 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 19 (Sun)</div>
+              <div class="timebox">Budget: 3h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 17 (Elastic Beanstalk) + Quiz 14</div>
+                <div class="hint">Hands-on: deployment modes; know “when Beanstalk is a good fit.”</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 14 done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Start: Section 18 (CloudFormation) — Part 1</div>
+                <div class="hint">Hands-on: create/update/delete stack; keep templates minimal.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Part 1 videos done</label>
+                  <label class="chk"><input type="checkbox"> Part 1 hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Intrinsics list started</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 20 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 20 (Mon)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 18 (CloudFormation) + Quiz 15</div>
+                <div class="hint">Output: 1 page “CFN essentials”: parameters, mappings, outputs/exports, conditions, rollbacks, deletion policy.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 15 done</label>
+                  <label class="chk"><input type="checkbox"> 1-page CFN sheet</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Admin task (10 min): Schedule the exam</div>
+                <div class="hint">Schedule before/around this date to lock the plan and reduce drift.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Exam scheduled</label>
+                  <label class="chk"><input type="checkbox"> Time + ID ready</label>
+                  <label class="chk"><input type="checkbox"> Calendar reminder set</label>
+                  <label class="chk"><input type="checkbox"> Buffer day confirmed</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 21 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 21 (Tue)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Start: Section 19 (SQS/SNS/Kinesis) — Part 1</div>
+                <div class="hint">Focus: SQS standard vs FIFO, DLQ, visibility timeout, access policy.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Part 1 videos done</label>
+                  <label class="chk"><input type="checkbox"> SQS hands-on done</label>
+                  <label class="chk"><input type="checkbox"> DLQ rules noted</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 22 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 22 (Wed)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 19 (SQS/SNS/Kinesis) + Quiz 16</div>
+                <div class="hint">Key comparisons: SNS vs SQS vs Kinesis; know common patterns (fan-out, buffering, streaming).</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 16 done</label>
+                  <label class="chk"><input type="checkbox"> Comparison notes done</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Bonus (if time): Section 29 (Advanced Identity) + Quiz 26</div>
+                <div class="hint">Small but high-yield: STS + pass role. Do it now if you have extra time.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Section 29 done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 26 done</label>
+                  <label class="chk"><input type="checkbox"> STS use-cases listed</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 23 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 23 (Thu)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Start: Section 20 (CloudWatch/X-Ray/CloudTrail/EventBridge) — Part 1</div>
+                <div class="hint">Hands-on: logs + metric filters + alarms (timebox). Capture when to use X-Ray vs logs.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Part 1 videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> X-Ray vs Logs notes</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 24 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 24 (Fri)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 20 (Monitoring & Audit) + Quiz 17</div>
+                <div class="hint">Focus: EventBridge patterns, CloudTrail vs CloudWatch, instrumentation basics for X-Ray.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 17 done</label>
+                  <label class="chk"><input type="checkbox"> 1-page monitoring map</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Bonus (if time): Section 31 (Other Services) + Quiz 28</div>
+                <div class="hint">Light section. Do it now if you’re ahead to free up later days.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Section 31 done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 28 done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on (ACM/Athena) done</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 25 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 25 (Sat)</div>
+              <div class="timebox">Budget: 3h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 24 (CICD) + Quiz 21</div>
+                <div class="hint">Hands-on focus: CodePipeline + CodeBuild + CodeDeploy flow. Output: “CI vs CD” + where each AWS service fits.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 21 done</label>
+                  <label class="chk"><input type="checkbox"> CI/CD flow notes</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">If time remains: Section 25 (SAM) + Quiz 22</div>
+                <div class="hint">Timebox SAM hands-on; focus on what SAM abstracts vs CloudFormation.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Section 25 done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 22 done</label>
+                  <label class="chk"><input type="checkbox"> SAM vs CFN noted</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 26 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 26 (Sun)</div>
+              <div class="timebox">Budget: 3h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 30 (Security & Encryption) + Quiz 27</div>
+                <div class="hint">Hands-on focus: KMS basics + key policy vs IAM; SSM Parameter Store vs Secrets Manager decision rule.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 27 done</label>
+                  <label class="chk"><input type="checkbox"> Decision rules written</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 26 (CDK) + Quiz 23 (if not done)</div>
+                <div class="hint">Only need exam-level understanding + basic commands; timebox.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Section 26 done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 23 done</label>
+                  <label class="chk"><input type="checkbox"> Commands captured</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 27 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 27 (Mon)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Start: Section 21 (Lambda) — Part A</div>
+                <div class="hint">Focus: sync vs async, retries/DLQ/destinations, triggers (S3/EventBridge/SQS), IAM permissions model.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Part A videos done</label>
+                  <label class="chk"><input type="checkbox"> Part A hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Retry/DLQ notes</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 28 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 28 (Tue)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Lambda — Part B</div>
+                <div class="hint">Focus: env vars, monitoring/X-Ray, Lambda@Edge vs CloudFront Functions, VPC, performance, layers.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Part B videos done</label>
+                  <label class="chk"><input type="checkbox"> Part B hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Edge vs Functions notes</label>
+                  <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- APR 29 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">Apr 29 (Wed)</div>
+              <div class="timebox">Budget: 1–2h</div>
+            </div>
+            <ul class="targets">
+              <li class="taskrow">
+                <div class="tasktitle">Finish: Section 21 (Lambda) + Quiz 18</div>
+                <div class="hint">Focus: concurrency, versions/aliases, CodeDeploy integration, function URLs, limits/best practices.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Videos done</label>
+                  <label class="chk"><input type="checkbox"> Hands-on done</label>
+                  <label class="chk"><input type="checkbox"> Quiz 18 done</label>
+                  <label class="chk"><input type="checkbox"> “Lambda rules” sheet</label>
+                </div>
+              </li>
+              <li class="taskrow">
+                <div class="tasktitle">Bonus (if time): Section 32 (Final Cleanup)</div>
+                <div class="hint">Quick win. Do it if you have spare time.</div>
+                <div class="checks">
+                  <label class="chk"><input type="checkbox"> Section 32 done</label>
+                  <label class="chk"><input type="checkbox"> Cleanup checklist read</label>
+                  <label class="chk"><input type="checkbox"> Costs checked</label>
+                  <label class="chk"><input type="checkbox"> Notes updated</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <p class="printnote">
+          Note: Remaining smaller sections (DynamoDB, API Gateway, Cognito, Step Functions/AppSync, exam-prep videos, wrap-up) are completed in Phase B below (Apr 30),
+          so you still finish “everything” by Apr 30.
+        </p>
+      </div>
+    </details>
+
+    <div class="section-title">Phase B — Finish remaining small sections + Practice Test (Apr 30)</div>
+    <details open>
+      <summary>
+        <span class="badge">Phase B</span>
+        Apr 30 course finish + timed practice test + error log
+        <span class="badge">non-negotiable</span>
+      </summary>
+      <div class="content">
+        <div class="day">
+          <div class="dayhead">
+            <div class="dayname">Apr 30 (Thu)</div>
+            <div class="timebox">Budget: 1–2h (minimum) + optional extra if available</div>
+          </div>
+
+          <ul class="targets">
+            <li class="taskrow">
+              <div class="tasktitle">Finish: Section 22 (DynamoDB) + Quiz 19</div>
+              <div class="hint">Hands-on focus: keys, GSI/LSI, streams, TTL, DAX. Output: “When to use DynamoDB vs RDS” notes.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> DynamoDB videos done</label>
+                <label class="chk"><input type="checkbox"> DynamoDB hands-on done</label>
+                <label class="chk"><input type="checkbox"> Quiz 19 done</label>
+                <label class="chk"><input type="checkbox"> DynamoDB summary</label>
+              </div>
+            </li>
+
+            <li class="taskrow">
+              <div class="tasktitle">Finish: Section 23 (API Gateway) + Quiz 20</div>
+              <div class="hint">Focus: auth, caching, mapping templates, stages/deployments, REST vs HTTP vs WebSocket at a high level.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> API GW videos done</label>
+                <label class="chk"><input type="checkbox"> API GW hands-on done</label>
+                <label class="chk"><input type="checkbox"> Quiz 20 done</label>
+                <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+              </div>
+            </li>
+
+            <li class="taskrow">
+              <div class="tasktitle">Finish: Section 27 (Cognito) + Quiz 24</div>
+              <div class="hint">Focus: user pools vs identity pools + common auth flows. Timebox hands-on.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Cognito section done</label>
+                <label class="chk"><input type="checkbox"> Quiz 24 done</label>
+                <label class="chk"><input type="checkbox"> Pools comparison noted</label>
+                <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+              </div>
+            </li>
+
+            <li class="taskrow">
+              <div class="tasktitle">Finish: Section 28 (Step Functions & AppSync) + Quiz 25</div>
+              <div class="hint">Focus: standard vs express; error handling; integrations with Lambda. Hands-on timeboxed.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Section 28 done</label>
+                <label class="chk"><input type="checkbox"> Quiz 25 done</label>
+                <label class="chk"><input type="checkbox"> State machine notes</label>
+                <label class="chk"><input type="checkbox"> 5-bullet recall</label>
+              </div>
+            </li>
+
+            <li class="taskrow">
+              <div class="tasktitle">Finish: Section 33 (Exam Prep videos) + Practice Test 1 (timed)</div>
+              <div class="hint">Timed means: no notes, no pausing, strict time. Immediately create your Error Log below.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Exam prep videos done</label>
+                <label class="chk"><input type="checkbox"> Practice Test 1 taken (timed)</label>
+                <label class="chk"><input type="checkbox"> Error Log created</label>
+                <label class="chk"><input type="checkbox"> 3 weakest topics identified</label>
+              </div>
+            </li>
+
+            <li class="taskrow">
+              <div class="tasktitle">Finish: Section 34 (Wrap-up)</div>
+              <div class="hint">Fast finish; don’t overthink this section.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Section 34 done</label>
+                <label class="chk"><input type="checkbox"> Course marked complete</label>
+                <label class="chk"><input type="checkbox"> Notes consolidated</label>
+                <label class="chk"><input type="checkbox"> Plan for May ready</label>
+              </div>
+            </li>
+          </ul>
+
+          <p class="smallnote">
+            If Apr 30 becomes too tight: do the Practice Test 1 + Error Log first (highest ROI), then finish remaining small sections in short blocks later that day.
+            You still complete the course content by Apr 30.
+          </p>
+        </div>
+
+        <div class="section-title">Error Log (use from Apr 30 onward)</div>
+        <table aria-label="Error log template">
+          <thead>
+            <tr>
+              <th style="width:18%">Topic</th>
+              <th style="width:20%">Why I missed it</th>
+              <th style="width:32%">Correct rule / trigger phrase</th>
+              <th style="width:18%">Fix action</th>
+              <th style="width:12%">Retest date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="section-title">Phase C — 15-day practice exam cycle (May 1–May 15)</div>
+    <details open>
+      <summary>
+        <span class="badge">Phase C</span>
+        Practice → Review → Patch (repeat)
+        <span class="badge">May 1–May 15</span>
+      </summary>
+      <div class="content">
+        <div class="card">
+          <div class="rulebox">
+            <strong>The strategy that works best for you (given limited weekday time):</strong>
+            <ul>
+              <li><strong>Weekdays:</strong> shorter timed sets + deep review + patch one weak topic from Error Log.</li>
+              <li><strong>Weekends:</strong> full timed practice exam (or the largest timed set you have) + partial review same day.</li>
+              <li><strong>Non-negotiable:</strong> review time should be at least equal to test time over the week.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="plan">
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 1 (Fri)</div>
+              <div class="timebox">1–2h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Practice Set A (timed) + build Error Log categories</div>
+              <div class="hint">Goal: establish baseline weaknesses (not a perfect score).</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Timed set done</label>
+                <label class="chk"><input type="checkbox"> Error Log updated</label>
+                <label class="chk"><input type="checkbox"> 1 topic patched</label>
+                <label class="chk"><input type="checkbox"> 10-min recall</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 2 (Sat)</div>
+              <div class="timebox">3h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Full Timed Exam #1 (or largest available timed block) + start review</div>
+              <div class="hint">Same conditions every time. After the test: review only the questions you got wrong/guessed.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Exam timed</label>
+                <label class="chk"><input type="checkbox"> Review started</label>
+                <label class="chk"><input type="checkbox"> Error Log updated</label>
+                <label class="chk"><input type="checkbox"> Top 3 weak areas</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 3 (Sun)</div>
+              <div class="timebox">3h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Finish review of Exam #1 + patch day (hands-on if needed)</div>
+              <div class="hint">Patch means: rewatch only the exact lecture fragments OR redo a mini-lab tied to mistakes.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Review finished</label>
+                <label class="chk"><input type="checkbox"> 2 topics patched</label>
+                <label class="chk"><input type="checkbox"> Retest 10 Qs</label>
+                <label class="chk"><input type="checkbox"> Flashcards added</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- WEEKDAYS LOOP -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 4 (Mon)</div>
+              <div class="timebox">1–2h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Timed Set + deep review + patch 1 topic</div>
+              <div class="hint">If time is tight: do fewer questions but review harder.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Timed set done</label>
+                <label class="chk"><input type="checkbox"> Review done</label>
+                <label class="chk"><input type="checkbox"> Patch done</label>
+                <label class="chk"><input type="checkbox"> Error Log updated</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 5 (Tue)</div>
+              <div class="timebox">1–2h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Timed Set + review + patch 1 topic</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Timed set done</label>
+                <label class="chk"><input type="checkbox"> Review done</label>
+                <label class="chk"><input type="checkbox"> Patch done</label>
+                <label class="chk"><input type="checkbox"> Error Log updated</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 6 (Wed)</div>
+              <div class="timebox">1–2h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Mixed-topic drill day (no full exam)</div>
+              <div class="hint">Redo your “most painful” mistakes until the rule is automatic.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Drill done</label>
+                <label class="chk"><input type="checkbox"> 2 topics patched</label>
+                <label class="chk"><input type="checkbox"> Retest done</label>
+                <label class="chk"><input type="checkbox"> Sleep protected</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 7 (Thu)</div>
+              <div class="timebox">1–2h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Timed Set + review + patch 1 topic</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Timed set done</label>
+                <label class="chk"><input type="checkbox"> Review done</label>
+                <label class="chk"><input type="checkbox"> Patch done</label>
+                <label class="chk"><input type="checkbox"> Error Log updated</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 8 (Fri)</div>
+              <div class="timebox">1–2h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Light review day (burnout prevention)</div>
+              <div class="hint">Only: error-log rules + flashcards + 10–15 easy/medium questions.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Error Log reviewed</label>
+                <label class="chk"><input type="checkbox"> Flashcards</label>
+                <label class="chk"><input type="checkbox"> Short set done</label>
+                <label class="chk"><input type="checkbox"> Early sleep</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- WEEKEND 2 -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 9 (Sat)</div>
+              <div class="timebox">3h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Full Timed Exam #2 + start review</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Exam timed</label>
+                <label class="chk"><input type="checkbox"> Review started</label>
+                <label class="chk"><input type="checkbox"> Error Log updated</label>
+                <label class="chk"><input type="checkbox"> Weak areas updated</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 10 (Sun)</div>
+              <div class="timebox">3h</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Finish review of Exam #2 + patch + retest</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Review finished</label>
+                <label class="chk"><input type="checkbox"> 2 patches</label>
+                <label class="chk"><input type="checkbox"> Retest done</label>
+                <label class="chk"><input type="checkbox"> Flashcards added</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- FINAL WEEK (abbreviated but complete) -->
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 11–May 14 (Mon–Thu)</div>
+              <div class="timebox">1–2h/day</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Repeat loop daily: Timed set → review → patch 1 topic</div>
+              <div class="hint">If scores plateau: stop new exams for 48h and only patch the Error Log + retest.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> May 11 done</label>
+                <label class="chk"><input type="checkbox"> May 12 done</label>
+                <label class="chk"><input type="checkbox"> May 13 done</label>
+                <label class="chk"><input type="checkbox"> May 14 done</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="day">
+            <div class="dayhead">
+              <div class="dayname">May 15 (Fri)</div>
+              <div class="timebox">1–2h (light)</div>
+            </div>
+            <div class="taskrow">
+              <div class="tasktitle">Final light prep: error-log rules + pacing plan + sleep</div>
+              <div class="hint">No heavy new content. Protect calm + consistency.</div>
+              <div class="checks">
+                <label class="chk"><input type="checkbox"> Error Log skimmed</label>
+                <label class="chk"><input type="checkbox"> Pacing plan written</label>
+                <label class="chk"><input type="checkbox"> Quick flashcards</label>
+                <label class="chk"><input type="checkbox"> Sleep protected</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </details>
+
+    <div class="section-title">Phase D — Exam Day (May 16)</div>
+    <details>
+      <summary>
+        <span class="badge">Phase D</span>
+        Exam execution checklist
+        <span class="badge">May 16</span>
+      </summary>
+      <div class="content">
+        <div class="card">
+          <ul>
+            <li><strong>Pacing:</strong> first pass answer what you know; flag the rest; don’t get stuck early.</li>
+            <li><strong>Elimination:</strong> remove obviously wrong options first; watch for “nearly true” distractors.</li>
+            <li><strong>Mindset:</strong> treat it like your weekend timed exams (same routine, same calm).</li>
+            <li><strong>Final 10 minutes:</strong> revisit flags, not everything.</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <p class="printnote">
+      Tip: Save this as <span style="font-family:var(--mono)">aws_plan.html</span> and open daily. If you want the checkboxes to persist across refreshes, tell me and I’ll add a tiny localStorage script (still self-contained, no external tools).
+    </p>
+  </div>
+</body>
+</html>
