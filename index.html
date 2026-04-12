@@ -265,55 +265,73 @@
   </style>
 </head>
 <script>
-  let GITHUB_TOKEN = ""; 
-  const REPO_OWNER = "YOUR_USERNAME"; // Double check this is your exact username
-  const REPO_NAME = "study-data-vault";
+  // --- CONFIGURATION ---
+  const REPO_OWNER = "parthpatel-03"; // <--- CHANGE THIS
+  const REPO_NAME = "study.vault";
   const FILE_PATH = "progress.json";
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  
+  // --- APP STATE ---
+  let GITHUB_TOKEN = localStorage.getItem('gh_token') || "";
   let currentSha = "";
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
   async function initialize() {
-    GITHUB_TOKEN = localStorage.getItem('gh_token') || prompt("Enter GitHub Private Key:");
-    if (!GITHUB_TOKEN) return alert("Key required to sync.");
-    localStorage.setItem('gh_token', GITHUB_TOKEN); // Stores token locally so you don't type it every time
-    loadFromGithub();
+    if (!GITHUB_TOKEN) {
+      GITHUB_TOKEN = prompt("Please enter your GitHub Personal Access Token:");
+      if (!GITHUB_TOKEN) return alert("System won't work without a token.");
+      localStorage.setItem('gh_token', GITHUB_TOKEN);
+    }
+    await loadData();
   }
 
-  async function loadFromGithub() {
+  async function loadData() {
+    console.log("Attempting to load...");
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
+    
     try {
-      const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
       const response = await fetch(url, {
-        headers: { "Authorization": `token ${GITHUB_TOKEN}` }
+        headers: { "Authorization": `Beacon ${GITHUB_TOKEN}`, "Accept": "application/vnd.github.v3+json" }
       });
-      
-      if (response.status === 401) {
-          alert("Invalid Token! Please refresh and try again.");
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert("Error 401: Invalid Token. Clearing saved key...");
           localStorage.removeItem('gh_token');
-          return;
+        } else if (response.status === 404) {
+          alert(`Error 404: File not found at ${REPO_OWNER}/${REPO_NAME}/${FILE_PATH}`);
+        }
+        return;
       }
 
       const data = await response.json();
-      currentSha = data.sha; // Capture the version fingerprint
+      currentSha = data.sha; 
       
-      const content = JSON.parse(atob(data.content));
+      // Decode the Base64 content from GitHub safely
+      const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+      
       checkboxes.forEach((cb, i) => {
         cb.checked = content.includes(i);
       });
-      console.log("Loaded successfully!");
+      console.log("Load successful. SHA:", currentSha);
     } catch (err) {
-      console.error("Load error:", err);
+      alert("Network error while loading: " + err.message);
     }
   }
 
-  async function saveToGithub() {
+  async function saveData() {
+    if (!currentSha) {
+      console.log("No SHA ready, re-loading...");
+      await loadData();
+    }
+
     const checkedIndices = [];
     checkboxes.forEach((cb, i) => { if (cb.checked) checkedIndices.push(i); });
     
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
     const body = {
-      message: "Syncing Study Plan",
-      content: btoa(JSON.stringify(checkedIndices)),
-      sha: currentSha // Use the fingerprint we got during load
+      message: "Update progress from Web App",
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(checkedIndices)))),
+      sha: currentSha
     };
 
     try {
@@ -325,22 +343,35 @@
         },
         body: JSON.stringify(body)
       });
-      
-      if (!response.ok) throw new Error("Save Failed");
-      
+
       const result = await response.json();
-      currentSha = result.content.sha; // Update the fingerprint for the next click
-      console.log("Saved successfully!");
+
+      if (response.ok) {
+        currentSha = result.content.sha;
+        console.log("Save successful! New SHA:", currentSha);
+      } else {
+        console.error("Save Error:", result);
+        alert("Save failed: " + (result.message || "Unknown error"));
+        // If it's a conflict (409), reload the SHA
+        if (response.status === 409) await loadData();
+      }
     } catch (err) {
-      alert("Save failed! Re-fetching data...");
-      loadFromGithub(); // If save fails, re-sync to get the latest SHA
+      alert("Network error while saving: " + err.message);
     }
   }
 
-  checkboxes.forEach(cb => cb.addEventListener('change', saveToGithub));
+  // Attach event listeners
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      console.log("Checkbox changed, saving...");
+      saveData();
+    });
+  });
+
+  // Start the app
   initialize();
 </script>
-<body>
+  <body>
   <div class="wrap">
     <header>
       <h1>AWS Certified Developer Associate — Daily Plan (from your Udemy CSV)</h1>
