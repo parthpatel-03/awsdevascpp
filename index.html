@@ -265,32 +265,37 @@
   </style>
 </head>
 <script>
-  // HARDCODED START
   const REPO_OWNER = "parthpatel-03"; 
   const REPO_NAME = "study.vault"; 
   const FILE_PATH = "progress.json";
-  // --- END CONFIG ---
 
   let GITHUB_TOKEN = localStorage.getItem('gh_token') || "";
   let currentSha = "";
 
   async function initialize() {
-    // If it's not working, force a new token entry
     if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 10) {
-      GITHUB_TOKEN = prompt("PASTE THE NEW CLASSIC TOKEN HERE:");
-      if (GITHUB_TOKEN) localStorage.setItem('gh_token', GITHUB_TOKEN.trim());
+      const input = prompt("Please paste your NEW Classic GitHub Token (ghp_...):");
+      if (input) {
+        GITHUB_TOKEN = input.trim();
+        localStorage.setItem('gh_token', GITHUB_TOKEN);
+      }
     }
     loadData();
   }
 
   async function loadData() {
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
-    console.log("FINAL ATTEMPT URL:", url);
-
+    
     try {
       const response = await fetch(url, {
         headers: { "Authorization": `token ${GITHUB_TOKEN}` }
       });
+
+      if (response.status === 401) {
+        alert("Token invalid (401). Clearing saved key. Please refresh and enter the new Classic Token.");
+        localStorage.removeItem('gh_token');
+        return;
+      }
 
       if (response.ok) {
         const data = await response.json();
@@ -299,40 +304,47 @@
         document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => {
           cb.checked = content.includes(i);
         });
-        console.log("IT WORKED!");
+        console.log("Sync Successful!");
       } else {
-        const errorDetail = await response.text();
-        console.error("STILL FAILING. Code:", response.status);
-        console.error("RESPONSE TEXT:", errorDetail);
-        
-        if(response.status === 404) {
-             alert("STILL 404. Let's try one more thing: Go to your Private repo and check the URL bar. Does it say 'study.vault' or 'study-vault'?");
-        }
+        console.error("Error:", response.status);
       }
     } catch (err) {
-      console.error("NETWORK ERROR:", err);
+      console.error("Connection failed:", err);
     }
   }
 
   async function saveData() {
+    if (!currentSha) return;
     const checked = [];
     document.querySelectorAll('input[type="checkbox"]').forEach((cb, i) => { if(cb.checked) checked.push(i); });
     
-    await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
+    const body = {
+      message: "Syncing Study Progress",
+      content: btoa(JSON.stringify(checked)),
+      sha: currentSha
+    };
+
+    const resp = await fetch(url, {
       method: "PUT",
-      headers: { "Authorization": `token ${GITHUB_TOKEN}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: "sync",
-        content: btoa(JSON.stringify(checked)),
-        sha: currentSha
-      })
-    }).then(r => r.json()).then(d => { 
-        currentSha = d.content.sha;
-        console.log("SAVED");
+      headers: { 
+        "Authorization": `token ${GITHUB_TOKEN}`,
+        "Content-Type": "application/json" 
+      },
+      body: JSON.stringify(body)
     });
+
+    if (resp.ok) {
+      const d = await resp.json();
+      currentSha = d.content.sha;
+      console.log("Progress Saved to Private Repo.");
+    }
   }
 
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', saveData));
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', saveData);
+  });
+
   initialize();
 </script>
   <body>
