@@ -50,7 +50,7 @@
     --tag-both-t: #92400e;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; transition: background 0.3s, color 0.3s; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; transition: background 0.3s, color 0.3s; visibility: hidden; }
 
   /* NAV */
   nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
@@ -163,6 +163,10 @@
   /* TIPS */
   .tip-box { background: var(--bg3); border-left: 3px solid var(--yellow); border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; margin-bottom: 0.75rem; font-size: 0.83rem; line-height: 1.6; }
   .tip-box strong { color: var(--yellow); }
+  .bottom-tools { max-width: 1400px; margin: 0 auto 1.5rem; padding: 0 1.5rem; }
+  .gist-id-btn { width: 100%; padding: 0.7rem 1rem; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+  .gist-id-btn:hover { background: var(--bg3); }
+  #gistIdStatus { margin-top: 0.5rem; font-size: 0.82rem; color: var(--text2); text-align: center; min-height: 1.2em; }
 
   /* MOBILE CARDS (replaces table on small screens) */
   .mobile-cards { display: none; }
@@ -352,6 +356,11 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="bottom-tools">
+  <button class="gist-id-btn" onclick="showCurrentGistId()">Show Current Gist ID</button>
+  <div id="gistIdStatus"></div>
 </div>
 
 <script>
@@ -768,10 +777,38 @@ function updateCountdown() {
 }
 
 // ===================== GITHUB GIST SYNC =====================
+async function validateGistToken(token) {
+  if (!token) return false;
+  try {
+    const res = await fetch('https://api.github.com/user', { headers: { Authorization: `token ${token}` } });
+    return res.ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function requestAndValidateGistToken(prefill = '') {
+  const enteredToken = window.prompt('Enter GitHub token for Gist sync', prefill);
+  if (enteredToken === null) {
+    document.getElementById('ghToken').value = '';
+    return '';
+  }
+  const token = enteredToken.trim();
+  const valid = await validateGistToken(token);
+  if (!valid) {
+    document.getElementById('ghToken').value = '';
+    return '';
+  }
+  document.getElementById('ghToken').value = token;
+  localStorage.setItem('ghToken', token);
+  return token;
+}
+
 async function saveToGist() {
-  const token = document.getElementById('ghToken').value.trim();
+  let token = document.getElementById('ghToken').value.trim() || (localStorage.getItem('ghToken') || '').trim();
+  if (!token) token = await requestAndValidateGistToken(localStorage.getItem('ghToken') || '');
   const gistId = document.getElementById('ghGistId').value.trim();
-  if (!token) { document.getElementById('syncStatus').textContent = '❌ Please enter a GitHub token.'; return; }
+  if (!token) { document.getElementById('syncStatus').textContent = '❌ GitHub token is required.'; return; }
   const allItems = [...checklists.phase1, ...checklists.phase2, ...checklists.phase3];
   const data = {};
   allItems.forEach(i => { data[i.id] = localStorage.getItem(i.id) === 'true'; });
@@ -782,6 +819,8 @@ async function saveToGist() {
     const res = await fetch(url, { method, headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const json = await res.json();
     if (json.id) {
+      document.getElementById('ghToken').value = token;
+      localStorage.setItem('ghToken', token);
       document.getElementById('ghGistId').value = json.id;
       localStorage.setItem('ghGistId', json.id);
       document.getElementById('syncStatus').textContent = `✅ Saved to Gist: ${json.id}`;
@@ -790,7 +829,8 @@ async function saveToGist() {
 }
 
 async function loadFromGist() {
-  const token = document.getElementById('ghToken').value.trim();
+  let token = document.getElementById('ghToken').value.trim() || (localStorage.getItem('ghToken') || '').trim();
+  if (!token) token = await requestAndValidateGistToken(localStorage.getItem('ghToken') || '');
   const gistId = document.getElementById('ghGistId').value.trim() || localStorage.getItem('ghGistId');
   if (!token || !gistId) { document.getElementById('syncStatus').textContent = '❌ Please enter token and Gist ID.'; return; }
   try {
@@ -798,6 +838,10 @@ async function loadFromGist() {
     const json = await res.json();
     const content = json.files?.['dva_prep_progress.json']?.content;
     if (content) {
+      document.getElementById('ghToken').value = token;
+      localStorage.setItem('ghToken', token);
+      document.getElementById('ghGistId').value = gistId;
+      localStorage.setItem('ghGistId', gistId);
       const data = JSON.parse(content);
       Object.entries(data).forEach(([k, v]) => localStorage.setItem(k, v));
       renderChecklists();
@@ -815,6 +859,20 @@ function toggleTheme() {
   localStorage.setItem('theme', isDark ? 'light' : 'dark');
 }
 
+function showCurrentGistId() {
+  const gistId = document.getElementById('ghGistId').value.trim() || localStorage.getItem('ghGistId') || '';
+  const status = document.getElementById('gistIdStatus');
+  if (!gistId) {
+    status.textContent = 'No Gist ID found. Save to Gist first.';
+    return;
+  }
+  navigator.clipboard.writeText(gistId).then(() => {
+    status.textContent = `Gist ID: ${gistId} (copied)`;
+  }).catch(() => {
+    status.textContent = `Gist ID: ${gistId}`;
+  });
+}
+
 // ===================== PAGE NAV =====================
 function showPage(page, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -824,12 +882,22 @@ function showPage(page, el) {
 }
 
 // ===================== INIT =====================
-window.onload = () => {
+window.onload = async () => {
   const savedTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
   document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
   const savedGist = localStorage.getItem('ghGistId');
   if (savedGist) document.getElementById('ghGistId').value = savedGist;
+  const savedToken = (localStorage.getItem('ghToken') || '').trim();
+  document.getElementById('ghToken').value = '';
+  const token = await requestAndValidateGistToken(savedToken);
+  if (!token) {
+    document.body.innerHTML = '';
+    return;
+  }
+  document.getElementById('ghToken').value = token;
+  if (savedGist) await loadFromGist();
+  document.body.style.visibility = 'visible';
   renderServices();
   renderChecklists();
   updateCountdown();
