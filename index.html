@@ -51,7 +51,6 @@
   }
    * { box-sizing: border-box; margin: 0; padding: 0; }
    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; transition: background 0.3s, color 0.3s; }
-   body.locked { opacity: 0.3; pointer-events: none; }
 
   /* NAV */
   nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
@@ -198,101 +197,12 @@
     .countdown-box .num { font-size: 1.5rem; }
   }
    @media (max-width: 768px) {
-     .table-wrap { display: none; }
-     .mobile-cards { display: block; }
-   }
-   
-   /* TOKEN GATE */
-   #token-gate {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     background: var(--bg);
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     z-index: 9999;
-   }
-   #token-gate.hidden {
-     display: none;
-   }
-   .token-modal {
-     background: var(--card);
-     border: 2px solid var(--accent);
-     border-radius: 16px;
-     padding: 3rem 2.5rem;
-     max-width: 420px;
-     width: 90%;
-     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-     text-align: center;
-   }
-   .token-modal h1 {
-     color: var(--accent2);
-     margin-bottom: 0.5rem;
-     font-size: 1.8rem;
-   }
-   .token-modal p {
-     color: var(--text2);
-     margin-bottom: 1.5rem;
-     font-size: 0.95rem;
-     line-height: 1.5;
-   }
-   .token-input {
-     width: 100%;
-     padding: 0.75rem 1rem;
-     border: 1px solid var(--border);
-     background: var(--bg3);
-     color: var(--text);
-     border-radius: 8px;
-     font-size: 0.95rem;
-     margin-bottom: 1rem;
-     outline: none;
-     transition: border-color 0.2s;
-   }
-   .token-input:focus {
-     border-color: var(--accent);
-   }
-   .token-btn {
-     width: 100%;
-     padding: 0.85rem;
-     background: var(--accent);
-     color: #fff;
-     border: none;
-     border-radius: 8px;
-     font-size: 1rem;
-     font-weight: 600;
-     cursor: pointer;
-     transition: all 0.2s;
-   }
-   .token-btn:hover {
-     background: var(--accent2);
-     transform: translateY(-2px);
-   }
-   .token-btn:active {
-     transform: translateY(0);
-   }
-   .token-error {
-     color: var(--red);
-     font-size: 0.85rem;
-     margin-top: 1rem;
-     min-height: 1.2em;
-   }
+      .table-wrap { display: none; }
+      .mobile-cards { display: block; }
+    }
  </style>
 </head>
 <body>
-
-<!-- TOKEN GATE -->
-<div id="token-gate">
-  <div class="token-modal">
-    <h1>🔐 Access Required</h1>
-    <p>This is a private study resource. Enter your access token to continue.</p>
-    <input type="password" id="token-input" class="token-input" placeholder="Enter access token" onkeypress="if(event.key==='Enter') verifyToken()">
-    <button class="token-btn" onclick="verifyToken()">🔓 Unlock</button>
-    <div class="token-error" id="token-error"></div>
-  </div>
-</div>
 
 <nav>
   <div class="nav-brand"><span>☁️</span> AWS DVA-C02 Prep Hub</div>
@@ -457,40 +367,6 @@
 </div>
 
 <script>
-// ===================== TOKEN GATE =====================
-const VALID_TOKEN = 'aws-dva-c02-prep-2026';
-
-function checkToken() {
-  const token = sessionStorage.getItem('auth-token');
-  if (token === VALID_TOKEN) {
-    document.getElementById('token-gate').classList.add('hidden');
-    document.body.classList.remove('locked');
-  } else {
-    document.getElementById('token-gate').classList.remove('hidden');
-    document.body.classList.add('locked');
-  }
-}
-
-function verifyToken() {
-  const input = document.getElementById('token-input');
-  const errorDiv = document.getElementById('token-error');
-  const token = input.value.trim();
-  
-  if (token === VALID_TOKEN) {
-    sessionStorage.setItem('auth-token', VALID_TOKEN);
-    errorDiv.textContent = '';
-    document.getElementById('token-gate').classList.add('hidden');
-    document.body.classList.remove('locked');
-    input.value = '';
-  } else {
-    errorDiv.textContent = '❌ Invalid token. Please try again.';
-    input.value = '';
-    input.focus();
-  }
-}
-
-document.addEventListener('DOMContentLoaded', checkToken);
-
 // ===================== DATA =====================
 const services = [
   {
