@@ -248,7 +248,7 @@
 
   <!-- Countdown -->
   <div class="countdown-wrap">
-    <div class="countdown-title">🎯 Target: Exam in July 2026 · Study Until: July 28, 2026</div>
+    <div class="countdown-title">🎯 Target: Exam on Aug 3, 2026 (Long Weekend) · Study Schedule: July 14 - Aug 2</div>
     <div id="countdown"></div>
   </div>
 
@@ -258,38 +258,50 @@
     <div>
       <!-- Daily Schedule -->
       <div class="card" style="margin-bottom:1.5rem;">
-        <div class="card-title"><span class="icon">📅</span> Your Weekly Study Plan (June 27 - July 28)</div>
+        <div class="card-title"><span class="icon">📅</span> Your Weekly Study Plan (July 14 - Aug 2)</div>
 
         <div class="schedule-day">
-          <div class="schedule-day-label">⚡ Weekdays — 1.5-2 Hours</div>
+          <div class="schedule-day-label">⚡ Weekdays (Mon-Fri) — 90 mins max</div>
           <div class="schedule-slot">
-            <span class="slot-time">Morning (~15m)</span>
-            <span class="slot-desc">Quick review of yesterday's notes + set daily goal <span class="slot-badge badge-faq">REVIEW</span></span>
+            <span class="slot-time">Before Work (if commute day)</span>
+            <span class="slot-desc">
+              <input type="checkbox" style="margin-right: 8px;"> Quick 15-min review on commute (2 days/week with 30 min travel) <span class="slot-badge badge-faq">REVIEW</span>
+            </span>
           </div>
           <div class="schedule-slot">
-            <span class="slot-time">Evening (~1h 30m)</span>
+            <span class="slot-time">After Work: 7 PM - 8:30 PM (~90m)</span>
             <span class="slot-desc">
-              Review annotated slides for 1 topic/service <span class="slot-badge badge-slides">SLIDES</span><br>
-              Retake quizzes for that section (aim 90%+) <span class="slot-badge badge-quiz">QUIZ</span><br>
-              Re-watch videos only if concept is unclear <span class="slot-badge badge-video">VIDEO</span>
+              <input type="checkbox" style="margin-right: 8px;"> Review slides for 1 AWS service (15 min) <span class="slot-badge badge-slides">SLIDES</span><br>
+              <input type="checkbox" style="margin-right: 8px;"> Read FAQ for that service (30 min) <span class="slot-badge badge-faq">FAQ</span><br>
+              <input type="checkbox" style="margin-right: 8px;"> Practice quiz for that topic (45 min, aim 90%+) <span class="slot-badge badge-quiz">QUIZ</span>
             </span>
+          </div>
+          <div class="schedule-slot">
+            <span class="slot-time">Note:</span>
+            <span class="slot-desc">Job ends 5 PM → 2 hrs dinner prep/family → Study at 7 PM. Adjust as needed!</span>
           </div>
         </div>
 
         <div class="schedule-day">
-          <div class="schedule-day-label">🏖️ Weekends — 4-5 Hours</div>
+          <div class="schedule-day-label">🏖️ Weekends (Sat-Sun) — 3 hours in fractions</div>
           <div class="schedule-slot">
-            <span class="slot-time">Morning (2h)</span>
+            <span class="slot-time">Morning (Sat): 1.5-2 Hours</span>
             <span class="slot-desc">
-              Deep dive on weak areas — targeted review <span class="slot-badge badge-slides">SLIDES</span><br>
-              Watch explanations for confusing topics <span class="slot-badge badge-video">VIDEO</span>
+              <input type="checkbox" style="margin-right: 8px;"> Deep dive: 1-2 weak/complex services <span class="slot-badge badge-slides">SLIDES</span><br>
+              <input type="checkbox" style="margin-right: 8px;"> Read FAQs for those services <span class="slot-badge badge-faq">FAQ</span>
             </span>
           </div>
           <div class="schedule-slot">
-            <span class="slot-time">Afternoon (2–3h)</span>
+            <span class="slot-time">Afternoon (Sat): 1-1.5 Hours</span>
             <span class="slot-desc">
-              Full 65-question mock exam (Phases 2-3) <span class="slot-badge badge-mock">MOCK</span><br>
-              Deep analysis: wrong answers + read explanations carefully
+              <input type="checkbox" style="margin-right: 8px;"> Full 65-question practice exam (mock) <span class="slot-badge badge-mock">MOCK</span>
+            </span>
+          </div>
+          <div class="schedule-slot">
+            <span class="slot-time">Sunday: 1.5 Hours</span>
+            <span class="slot-desc">
+              <input type="checkbox" style="margin-right: 8px;"> Deep analysis: Review all wrong answers + read explanations <span class="slot-badge badge-faq">FAQ</span><br>
+              <input type="checkbox" style="margin-right: 8px;"> Quick quiz on weak topics (aim 90%+) <span class="slot-badge badge-quiz">QUIZ</span>
             </span>
           </div>
         </div>
@@ -297,14 +309,15 @@
 
       <!-- Tips -->
       <div class="card">
-        <div class="card-title"><span class="icon">💡</span> Exam Prep Tips</div>
-        <div class="tip-box"><strong>🗓️ Timeline:</strong> Study intensively through July 28, then take July 29-Aug 4 for light review & exam prep. Schedule exam for early August.</div>
+        <div class="card-title"><span class="icon">💡</span> Study Tips & FAQ Strategy</div>
+        <div class="tip-box"><strong>📖 How to Use FAQs:</strong> After learning each service's slides, read the official AWS FAQ (30 min/service). These FAQs have real-world Q&A that often appear on exams!</div>
+        <div class="tip-box"><strong>🗓️ Timeline:</strong> July 14-27: Learn topics + FAQs. July 28-Aug 2: Mock exams & review weak areas. Aug 3: Exam day!</div>
         <div class="tip-box"><strong>⏱ During Exam:</strong> 130 minutes, 65 questions (~2 min/question). Flag hard ones, skip, return at end.</div>
-        <div class="tip-box"><strong>🎯 Passing Score:</strong> 720/1000. Focus on: Deployment, Security, Development domains.</div>
-        <div class="tip-box"><strong>🧠 Strategy:</strong> Eliminate 2 wrong answers first, pick between remaining two. Read carefully.</div>
-        <div class="tip-box"><strong>📚 Last Week (July 22-28):</strong> Revision only—no new content. Review weak areas, practice mocks, do FAQs.</div>
-        <div class="tip-box"><strong>📱 Mobile Hack:</strong> Use the FAQ links on Page 1 during commutes for quick reference reviews.</div>
-        <div class="tip-box"><strong>😴 Night Before Exam:</strong> Light review of cheat sheets only (30 min max). Get good sleep!</div>
+        <div class="tip-box"><strong>🎯 Passing Score:</strong> 720/1000. Focus on: Development, Deployment, Security domains.</div>
+        <div class="tip-box"><strong>🧠 Strategy:</strong> Eliminate 2 wrong answers first, pick between remaining two. Read questions carefully!</div>
+        <div class="tip-box"><strong>📱 Commute Hack (2 days/week):</strong> 30-min commute = Perfect FAQ review time! Use browser to read AWS FAQs on your phone.</div>
+        <div class="tip-box"><strong>✅ Daily Checklist:</strong> Check off each task as you complete it. Keeps you on track!</div>
+        <div class="tip-box"><strong>😴 Before Exam (Aug 2 evening):</strong> Light review only (30 min). Get 8 hours sleep!</div>
       </div>
     </div>
 
@@ -319,8 +332,8 @@
         <!-- Phase 1 -->
         <div class="phase-section">
           <div class="phase-header">
-            <span class="phase-title phase-1">📘 Phase 1: Intensive Slide Mastery</span>
-            <span class="phase-badge phase-badge-1">June 27 – July 13 · 2 Weeks</span>
+            <span class="phase-title phase-1">📖 Phase 1: Learn Topics + FAQs</span>
+            <span class="phase-badge phase-badge-1">July 14 – July 28 · 2 Weeks</span>
           </div>
           <div id="checklist-phase1"></div>
         </div>
@@ -328,8 +341,8 @@
         <!-- Phase 2 -->
         <div class="phase-section">
           <div class="phase-header">
-            <span class="phase-title phase-2">🧪 Phase 2: Full Mock Exams & Analysis</span>
-            <span class="phase-badge phase-badge-2">July 14 – July 21 · 1 Week</span>
+            <span class="phase-title phase-2">🧪 Phase 2: Mock Exams & Weak Area Review</span>
+            <span class="phase-badge phase-badge-2">July 28 – Aug 1 · 4-5 Days</span>
           </div>
           <div id="checklist-phase2"></div>
         </div>
@@ -337,8 +350,8 @@
         <!-- Phase 3 -->
         <div class="phase-section">
           <div class="phase-header">
-            <span class="phase-title phase-3">🔍 Phase 3: Intensive Revision</span>
-            <span class="phase-badge phase-badge-3">July 22 – July 28 · 1 Week</span>
+            <span class="phase-title phase-3">✨ Phase 3: Final Light Review + Rest</span>
+            <span class="phase-badge phase-badge-3">Aug 1-2 · 2 Days</span>
           </div>
           <div id="checklist-phase3"></div>
         </div>
@@ -577,48 +590,38 @@ const services = [
 
 const checklists = {
   phase1: [
-    { id: "p1_1", text: "Review IAM & CLI slides + personal notes", meta: "June 27-29 · ~40 min" },
-    { id: "p1_2", text: "Retake IAM Quiz (target 90%+)", meta: "June 29 · ~20 min" },
-    { id: "p1_3", text: "Review EC2 & EBS slides + notes", meta: "June 30 - July 1 · ~40 min" },
-    { id: "p1_4", text: "Retake EC2 & EBS Quizzes (target 90%+)", meta: "July 1 · ~30 min" },
-    { id: "p1_5", text: "Review S3 & CloudFront slides + notes", meta: "July 2-3 · ~40 min" },
-    { id: "p1_6", text: "Retake S3 Quiz (target 90%+)", meta: "July 3 · ~20 min" },
-    { id: "p1_7", text: "Review RDS & ElastiCache slides + notes", meta: "July 4-5 · ~40 min" },
-    { id: "p1_8", text: "Retake RDS Quiz (target 90%+)", meta: "July 5 · ~20 min" },
-    { id: "p1_9", text: "Review Lambda & API Gateway slides + notes", meta: "July 6-7 · ~40 min" },
-    { id: "p1_10", text: "Retake Lambda & API Gateway Quizzes", meta: "July 7 · ~30 min" },
-    { id: "p1_11", text: "Review DynamoDB slides + notes", meta: "July 8 · ~40 min" },
-    { id: "p1_12", text: "Retake DynamoDB Quiz (target 90%+)", meta: "July 8 · ~20 min" },
-    { id: "p1_13", text: "Review SQS, SNS & Kinesis slides + notes", meta: "July 9 · ~40 min" },
-    { id: "p1_14", text: "Retake Messaging Quizzes (target 90%+)", meta: "July 9 · ~30 min" },
-    { id: "p1_15", text: "Review ECS, Beanstalk & Serverless slides", meta: "July 10 · ~60 min" },
-    { id: "p1_16", text: "Re-watch CI/CD videos (CodePipeline/Deploy) if unclear", meta: "July 10 · selective re-watch" },
-    { id: "p1_17", text: "Review CloudFormation, CDK & SAM slides", meta: "July 11 · ~40 min" },
-    { id: "p1_18", text: "Review Cognito, KMS & Secrets Manager slides", meta: "July 11 · ~40 min" },
-    { id: "p1_19", text: "Review X-Ray, CloudWatch & EventBridge slides", meta: "July 12 · ~40 min" },
-    { id: "p1_20", text: "Review Step Functions & STS slides", meta: "July 12 · ~30 min" },
-    { id: "p1_21", text: "Review VPC & Route 53 slides + notes", meta: "July 13 · ~30 min" },
+    { id: "p1_1", text: "IAM slides (15m) + FAQ (30m) + Quiz (45m)", meta: "Tue July 14 · 90 mins" },
+    { id: "p1_2", text: "EC2 slides + EC2 FAQ (30m each day this week)", meta: "Wed-Thu July 15-16 · 30 mins each" },
+    { id: "p1_3", text: "EBS & Storage FAQ review (on commute if available)", meta: "Fri July 17 · FAQ link in Services table" },
+    { id: "p1_4", text: "Weekend Study: S3 deep dive (slides 45m + FAQ 45m)", meta: "Sat July 20 · 90 mins" },
+    { id: "p1_5", text: "S3 Quiz practice + CloudFront FAQ review", meta: "Sat July 20 afternoon · 60 mins" },
+    { id: "p1_6", text: "RDS & Database FAQ (read during commute 2 days)", meta: "Mon-Fri July 21-24" },
+    { id: "p1_7", text: "Lambda deep dive: slides (20m) + FAQ (40m) + quiz (30m)", meta: "Tue July 21 · 90 mins" },
+    { id: "p1_8", text: "API Gateway FAQ + DynamoDB intro (split 2 days)", meta: "Wed-Thu July 22-23 · 45 mins each" },
+    { id: "p1_9", text: "Messaging services: SQS/SNS/Kinesis FAQ marathon", meta: "Fri July 24 commute · 30 mins" },
+    { id: "p1_10", text: "Weekend: Serverless review (ECS, Lambda, Fargate FAQs)", meta: "Sat July 27 · 90 mins" },
+    { id: "p1_11", text: "Deployment services: CodePipeline, CodeDeploy FAQs", meta: "Sat July 27 · 60 mins" },
+    { id: "p1_12", text: "Security services review: IAM, KMS, Secrets Manager FAQs", meta: "Sun July 28 · 60 mins" },
+    { id: "p1_13", text: "VPC, Route 53, CloudFront FAQ deep review", meta: "Sun July 28 · 60 mins" },
   ],
   phase2: [
-    { id: "p2_1", text: "First full 65-question practice exam (untimed)", meta: "July 14 · ~2.5h" },
-    { id: "p2_2", text: "Analyze every wrong answer + read explanations", meta: "July 14 · ~1h" },
-    { id: "p2_3", text: "Review weak service FAQs (identify bottom 5 topics)", meta: "July 15 · ~1h" },
-    { id: "p2_4", text: "Re-watch videos for bottom 3 scoring topics", meta: "July 15-16 · selective" },
-    { id: "p2_5", text: "Second full practice exam (timed: 130 min, target 75%+)", meta: "July 17 · ~2h 15m" },
-    { id: "p2_6", text: "Detailed review of all wrong answers", meta: "July 17-18 · ~1.5h" },
-    { id: "p2_7", text: "Third practice exam (timed, focus on weaker domains)", meta: "July 19 · ~2h 15m" },
-    { id: "p2_8", text: "Review AWS Well-Architected Framework whitepaper", meta: "July 20 · ~1h" },
-    { id: "p2_9", text: "Review AWS Security Best Practices whitepaper", meta: "July 21 · ~45 min" },
+    { id: "p2_1", text: "First 65-question practice exam (untimed, no pressure)", meta: "Mon July 28 weekend · ~90 mins" },
+    { id: "p2_2", text: "Deep analysis: wrong answers + read all explanations", meta: "Mon July 28 · ~60 mins" },
+    { id: "p2_3", text: "Identify bottom 3-5 weakest topics from exam", meta: "Tue July 29 · 20 mins" },
+    { id: "p2_4", text: "Re-read FAQs for bottom 3 topics (use Page 1 links)", meta: "Tue July 29 + Wed July 30 · 30m each day" },
+    { id: "p2_5", text: "Second timed exam (130 min, target 75%+)", meta: "Thu July 31 · ~2 hours" },
+    { id: "p2_6", text: "Detailed review of second exam wrong answers", meta: "Thu July 31 · 60 mins" },
+    { id: "p2_7", text: "Third timed practice exam (focus on weak domains)", meta: "Fri Aug 1 morning · ~2 hours" },
+    { id: "p2_8", text: "Review 3rd exam + AWS Well-Architected Framework", meta: "Fri Aug 1 · 60 mins" },
   ],
   phase3: [
-    { id: "p3_1", text: "Deep dive: Compile list of your 10 most confused concepts", meta: "July 22 · ~1h" },
-    { id: "p3_2", text: "Targeted re-watch of videos for confusing topics", meta: "July 22-23 · ~2h" },
-    { id: "p3_3", text: "Review & annotate all keyword chips in Services table", meta: "July 24 · ~1h" },
-    { id: "p3_4", text: "Timed mini-quiz: 20 random questions (target 85%+)", meta: "July 24 · ~25 min" },
-    { id: "p3_5", text: "Final review of cheat sheets for all 35 services", meta: "July 25 · ~1.5h" },
-    { id: "p3_6", text: "Full FAQ marathon: browse key 15 services (mobile-friendly)", meta: "July 26 · ~1h" },
-    { id: "p3_7", text: "Final timed mock exam (aim 80%+ and complete in 100 min)", meta: "July 27 · ~2h 15m" },
-    { id: "p3_8", text: "Review final mock exam: focus on reasoning, not just answers", meta: "July 27-28 · ~1h" },
+    { id: "p3_1", text: "Compile list of 10 most confusing exam concepts", meta: "Fri Aug 1 · 30 mins" },
+    { id: "p3_2", text: "Quick FAQ review of those 10 topics (use Page 1 links)", meta: "Fri Aug 1 · 30 mins" },
+    { id: "p3_3", text: "Light review: cheat sheets for top weak domains only", meta: "Sat Aug 2 · 45 mins" },
+    { id: "p3_4", text: "Quick 20-question timed quiz (target 90%+)", meta: "Sat Aug 2 · 25 mins" },
+    { id: "p3_5", text: "Relax! No heavy study. Light confidence building only.", meta: "Sat Aug 2 · 30 mins max" },
+    { id: "p3_6", text: "Early dinner, get 8+ hours sleep before exam!", meta: "Sat Aug 2 evening" },
+    { id: "p3_7", text: "Exam Day - You got this! 💪", meta: "Sun Aug 3 · Early morning" },
   ],
 };
 
@@ -762,11 +765,11 @@ function updateProgress() {
 
 // ===================== COUNTDOWN =====================
 function updateCountdown() {
-  const target = new Date('2026-07-28T23:59:59');
+  const target = new Date('2026-08-03T09:00:00');
   const now = new Date();
   const diff = target - now;
   if (diff <= 0) {
-    document.getElementById('countdown').innerHTML = '<div style="grid-column:1/-1;font-size:1.5rem;color:var(--green);">🎉 Revision Complete! Time for Exam Prep!</div>';
+    document.getElementById('countdown').innerHTML = '<div style="grid-column:1/-1;font-size:1.5rem;color:var(--green);">🎉 Exam Day! You got this! 💪</div>';
     return;
   }
   const days = Math.floor(diff / 86400000);
