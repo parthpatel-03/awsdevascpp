@@ -81,6 +81,54 @@ body {
 #header h1 { font-size: 1rem; color: var(--accent); font-weight: 700; }
 #header-right { display: flex; align-items: center; gap: 14px; }
 
+/* Back to Notes link */
+.back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.back-link:hover { border-color: var(--accent); background: var(--surface2); }
+
+/* Question count selector */
+.qty-selector {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+.qty-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text2);
+  margin-bottom: 10px;
+}
+.qty-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.qty-btn {
+  background: var(--surface2);
+  border: 1.5px solid var(--border2);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.qty-btn:hover { border-color: var(--accent); color: var(--accent); }
+.qty-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
 #timer {
   font-size: 1.3rem;
   font-weight: bold;
@@ -652,19 +700,32 @@ window.EMBEDDED_QUESTIONS = JSON.parse(atob('W3sibnVtYmVyIjogWzE2MSwgMV0sICJxdWV
 
 <!-- START SCREEN -->
 <div id="start-screen">
+  <a href="index.html" class="back-link" style="margin-bottom:20px;">← Back to Notes</a>
   <h1>☁️ AWS DVA-C02 Sample Exams</h1>
-  <p class="subtitle">Exam Simulator — 65 randomized questions, 130 minutes.<br/>
+  <p class="subtitle" id="subtitle">Exam Simulator — 65 randomized questions, 130 minutes.<br/>
   Scored on 50 questions · 15 are unscored practice items.</p>
 
+  <div class="qty-selector">
+    <div class="qty-label">📝 Questions per exam:</div>
+    <div class="qty-buttons">
+      <button class="qty-btn" data-qty="10" onclick="setQuestionCount('10')">10</button>
+      <button class="qty-btn" data-qty="20" onclick="setQuestionCount('20')">20</button>
+      <button class="qty-btn" data-qty="30" onclick="setQuestionCount('30')">30</button>
+      <button class="qty-btn" data-qty="40" onclick="setQuestionCount('40')">40</button>
+      <button class="qty-btn" data-qty="50" onclick="setQuestionCount('50')">50</button>
+      <button class="qty-btn active" data-qty="real" onclick="setQuestionCount('real')">🎯 Real Exam (65)</button>
+    </div>
+  </div>
+
   <div class="info-grid">
-    <div class="info-card"><div class="num">65</div><div class="lbl">Questions</div></div>
-    <div class="info-card"><div class="num">130</div><div class="lbl">Minutes</div></div>
+    <div class="info-card"><div class="num" id="stat-qty">65</div><div class="lbl">Questions</div></div>
+    <div class="info-card"><div class="num" id="stat-min">130</div><div class="lbl">Minutes</div></div>
     <div class="info-card"><div class="num">~2</div><div class="lbl">Min / Question</div><div class="sub">Ideal pace</div></div>
     <div class="info-card"><div class="num">720</div><div class="lbl">Pass Score</div></div>
     <div class="info-card"><div class="num">1000</div><div class="lbl">Max Score</div></div>
   </div>
 
-  <div class="time-tip">
+  <div class="time-tip" id="time-tip">
     ⏱️ <strong>Time Strategy:</strong> You have <strong>130 minutes</strong> for <strong>65 questions</strong> — that's exactly <strong>2 minutes per question</strong>.
     Aim to finish your first pass in <strong>~100 min</strong>, leaving 30 min to review flagged questions.
     If a question takes more than 3 min, flag it and move on.
@@ -680,6 +741,7 @@ window.EMBEDDED_QUESTIONS = JSON.parse(atob('W3sibnVtYmVyIjogWzE2MSwgMV0sICJxdWV
   <div id="header">
     <h1>☁️ AWS DVA-C02 Exam Simulator</h1>
     <div id="header-right">
+      <a href="index.html" class="back-link">← Notes</a>
       <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
       <div id="timer">02:10:00</div>
     </div>
@@ -778,11 +840,39 @@ window.addEventListener('beforeunload', function(e) {
 
 // ── Config ──
 const QUESTIONS_FILE   = './questions.json';
-const TOTAL_QUESTIONS  = 65;
-const SCORED_QUESTIONS = 50;
-const EXAM_MINUTES     = 130;
+let TOTAL_QUESTIONS  = 65;
+let SCORED_QUESTIONS = 50;
+let EXAM_MINUTES     = 130;
 const PASS_SCORE       = 720;
 const MAX_SCORE        = 1000;
+
+// Question-count presets (10/20/30/40/50 practice, or full real exam)
+const EXAM_PRESETS = {
+  '10':   { questions: 10,  minutes: 20,  scored: 10 },
+  '20':   { questions: 20,  minutes: 40,  scored: 20 },
+  '30':   { questions: 30,  minutes: 60,  scored: 30 },
+  '40':   { questions: 40,  minutes: 80,  scored: 40 },
+  '50':   { questions: 50,  minutes: 100, scored: 50 },
+  'real': { questions: 65, minutes: 130, scored: 50 }
+};
+let selectedPreset = 'real';
+
+function setQuestionCount(key) {
+  selectedPreset = key;
+  const preset = EXAM_PRESETS[key];
+  document.querySelectorAll('.qty-btn').forEach(b => b.classList.toggle('active', b.dataset.qty === key));
+  document.getElementById('stat-qty').textContent = preset.questions;
+  document.getElementById('stat-min').textContent = preset.minutes;
+  const sub = document.getElementById('subtitle');
+  const tip = document.getElementById('time-tip');
+  if (key === 'real') {
+    sub.innerHTML = 'Exam Simulator — 65 randomized questions, 130 minutes.<br/>Scored on 50 questions · 15 are unscored practice items.';
+    tip.innerHTML = `⏱️ <strong>Time Strategy:</strong> You have <strong>130 minutes</strong> for <strong>65 questions</strong> — that's exactly <strong>2 minutes per question</strong>. Aim to finish your first pass in <strong>~100 min</strong>, leaving 30 min to review flagged questions. If a question takes more than 3 min, flag it and move on.`;
+  } else {
+    sub.innerHTML = `Practice Session — ${preset.questions} randomized questions, ${preset.minutes} minutes.<br/>All ${preset.questions} questions are scored.`;
+    tip.innerHTML = `⏱️ <strong>Time Strategy:</strong> You have <strong>${preset.minutes} minutes</strong> for <strong>${preset.questions} questions</strong> — that's <strong>2 minutes per question</strong>. If a question takes more than 3 min, flag it and move on.`;
+  }
+}
 const DOMAINS = [
   { name: "Development with AWS Services",   weight: 32 },
   { name: "Security",                        weight: 26 },
@@ -863,6 +953,10 @@ async function startExam() {
 
   try {
     allQuestions = await loadQuestionsFile();
+    const preset = EXAM_PRESETS[selectedPreset];
+    TOTAL_QUESTIONS  = preset.questions;
+    SCORED_QUESTIONS = preset.scored;
+    EXAM_MINUTES     = preset.minutes;
   } catch(e) {
     document.getElementById('error-msg').innerHTML = `
       ❌ <strong>Could not load questions.json</strong><br>

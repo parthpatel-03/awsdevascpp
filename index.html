@@ -64,6 +64,19 @@
   .theme-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 0.35rem 0.75rem; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
   .theme-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
+  /* HAMBURGER + SIDE NAV (mobile) */
+  .hamburger { display: none; background: var(--bg3); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 0.3rem 0.6rem; cursor: pointer; font-size: 1.15rem; line-height: 1; transition: all 0.2s; }
+  .hamburger:hover { border-color: var(--accent); color: var(--accent); }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; opacity: 0; transition: opacity 0.3s; }
+  .sidebar-overlay.open { display: block; opacity: 1; }
+  .side-nav { position: fixed; top: 0; left: 0; height: 100vh; width: 260px; background: var(--bg2); border-right: 1px solid var(--border); z-index: 300; transform: translateX(-100%); transition: transform 0.3s; display: flex; flex-direction: column; padding: 1rem; gap: 0.4rem; }
+  .side-nav.open { transform: translateX(0); }
+  .side-nav-close { align-self: flex-end; background: none; border: none; color: var(--text2); font-size: 1.3rem; cursor: pointer; padding: 0.2rem 0.4rem; }
+  .side-nav-close:hover { color: var(--text); }
+  .side-nav-link { padding: 0.75rem 1rem; border-radius: 8px; border: none; background: transparent; color: var(--text2); font-size: 0.95rem; font-weight: 600; cursor: pointer; text-align: left; text-decoration: none; transition: all 0.2s; }
+  .side-nav-link:hover { background: var(--bg3); color: var(--text); }
+  .side-nav-link.active { background: var(--accent); color: #fff; }
+
   /* PAGES */
   .page { display: none; padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
   .page.active { display: block; }
@@ -125,6 +138,22 @@
   .badge-mock { background: #3a2d1f; color: #fb923c; }
   .badge-faq { background: #2d2a1f; color: #fbbf24; }
 
+  /* SCHEDULE DAY PICKER */
+  .schedule-picker { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .schedule-picker label { font-size: 0.82rem; font-weight: 600; color: var(--text2); }
+  .schedule-picker select {
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+  }
+  .schedule-picker select:focus { border-color: var(--accent); }
+
   /* CHECKLIST */
   .phase-section { margin-bottom: 1.5rem; }
   .phase-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
@@ -163,6 +192,24 @@
   /* TIPS */
   .tip-box { background: var(--bg3); border-left: 3px solid var(--yellow); border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; margin-bottom: 0.75rem; font-size: 0.83rem; line-height: 1.6; }
   .tip-box strong { color: var(--yellow); }
+
+  /* REVISION STRATEGY + DAILY TASKS */
+  .revision-section { margin-top: 1.5rem; }
+  .revision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 768px) { .revision-grid { grid-template-columns: 1fr; } }
+  .tech-item { display: flex; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .tech-item:last-child { border-bottom: none; }
+  .tech-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .tech-title { font-weight: 700; font-size: 0.9rem; }
+  .tech-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.5; margin-top: 0.15rem; }
+  .daily-task { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+  .daily-task:last-child { border-bottom: none; }
+  .daily-task input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; margin-top: 0.1rem; flex-shrink: 0; }
+  .daily-task label { font-size: 0.88rem; cursor: pointer; line-height: 1.5; }
+  .daily-task.done label { text-decoration: line-through; color: var(--text2); }
+  .daily-task .task-meta { font-size: 0.72rem; color: var(--text2); margin-top: 0.15rem; }
+  .daily-note { background: var(--bg3); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; margin-top: 0.75rem; font-size: 0.83rem; line-height: 1.6; }
+  .daily-note strong { color: var(--red); }
   .bottom-tools { max-width: 1400px; margin: 0 auto 1.5rem; padding: 0 1.5rem; }
   .gist-id-btn { width: 100%; padding: 0.7rem 1rem; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; font-size: 0.9rem; font-weight: 600; }
   .gist-id-btn:hover { background: var(--bg3); }
@@ -189,6 +236,30 @@
   .svc-card-cheat-body ul { padding-left: 1.2rem; }
   .svc-card-cheat-body li { margin-bottom: 0.3rem; }
 
+  /* MOBILE QUEUE CARD */
+  .mobile-queue { display: none; }
+  .queue-controls { margin-bottom: 0.75rem; }
+  .queue-controls select { width: 100%; padding: 0.6rem 0.9rem; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 0.95rem; font-weight: 600; outline: none; margin-bottom: 0.6rem; }
+  .queue-controls select:focus { border-color: var(--accent); }
+  .queue-nav-btns { display: flex; gap: 0.5rem; }
+  .queue-nav-btn { flex: 1; padding: 0.6rem 0.5rem; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .queue-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .queue-nav-btn.shuffle { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .queue-nav-btn.shuffle:hover { background: var(--accent2); }
+  .queue-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; border-left: 4px solid var(--accent); }
+  .queue-card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .queue-card-name { font-size: 1.1rem; font-weight: 700; }
+  .queue-card-section { margin-top: 0.9rem; }
+  .queue-card-section-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text2); margin-bottom: 0.4rem; }
+  .queue-card-actions { display: flex; gap: 0.5rem; margin-top: 0.9rem; flex-wrap: wrap; }
+  .queue-card-faq-btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.45rem 0.9rem; border-radius: 8px; background: var(--accent); color: #fff; font-size: 0.82rem; font-weight: 600; text-decoration: none; }
+  .queue-card-cheat-btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.45rem 0.9rem; border-radius: 8px; background: var(--bg3); border: 1px solid var(--border); color: var(--text); font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+  .queue-card-cheat-body { display: none; margin-top: 0.6rem; padding: 0.75rem; background: var(--bg3); border-radius: 8px; font-size: 0.8rem; line-height: 1.6; color: var(--text2); }
+  .queue-card-cheat-body.open { display: block; }
+  .queue-card-cheat-body ul { padding-left: 1.2rem; }
+  .queue-card-cheat-body li { margin-bottom: 0.3rem; }
+  .queue-counter { font-size: 0.75rem; color: var(--text2); text-align: center; margin-top: 0.6rem; }
+
   /* RESPONSIVE */
   @media (max-width: 600px) {
     nav { padding: 0 0.75rem; }
@@ -198,7 +269,10 @@
   }
    @media (max-width: 768px) {
       .table-wrap { display: none; }
-      .mobile-cards { display: block; }
+      .mobile-cards { display: none; }
+      .mobile-queue { display: block; }
+      .nav-tabs { display: none; }
+      .hamburger { display: inline-flex; }
     }
  </style>
 </head>
@@ -212,9 +286,19 @@
     <a href="ExamDrill.html" style="text-decoration:none;"><button class="nav-tab">🎯 Practice Exam</button></a>
   </div>
   <div class="nav-right">
+    <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ Light</button>
   </div>
 </nav>
+
+<!-- SIDE NAV DRAWER (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="side-nav" id="sideNav">
+  <button class="side-nav-close" onclick="closeSidebar()" aria-label="Close">✕</button>
+  <button class="side-nav-link active" onclick="showPage('services', this)">📋 Services</button>
+  <button class="side-nav-link" onclick="showPage('planner', this)">🗓️ Exam Planner</button>
+  <a class="side-nav-link" href="ExamDrill.html">🎯 Practice Exam</a>
+</div>
 
 <!-- ==================== PAGE 1: SERVICES ==================== -->
 <div id="page-services" class="page active">
@@ -241,6 +325,20 @@
   </div>
   <!-- Mobile expandable cards -->
   <div class="mobile-cards" id="mobileCards"></div>
+
+  <!-- Mobile queue card view -->
+  <div class="mobile-queue" id="mobileQueue">
+    <div class="queue-controls">
+      <select id="queueSelect" onchange="queueSelect()"></select>
+      <div class="queue-nav-btns">
+        <button class="queue-nav-btn" onclick="queuePrev()">◀ Prev</button>
+        <button class="queue-nav-btn shuffle" onclick="queueShuffle()">🔀 Shuffle</button>
+        <button class="queue-nav-btn" onclick="queueNext()">Next ▶</button>
+      </div>
+    </div>
+    <div class="queue-card" id="queueCard"></div>
+    <div class="queue-counter" id="queueCounter"></div>
+  </div>
 </div>
 
 <!-- ==================== PAGE 2: PLANNER ==================== -->
@@ -248,7 +346,7 @@
 
   <!-- Countdown -->
   <div class="countdown-wrap">
-    <div class="countdown-title">🎯 Target: Exam on Aug 3, 2026 (Long Weekend) · Study Schedule: July 14 - Aug 2</div>
+    <div class="countdown-title">🎯 Target: Exam on Sep 7, 2026 · Revision Plan: Aug 16 - Sep 6</div>
     <div id="countdown"></div>
   </div>
 
@@ -258,66 +356,31 @@
     <div>
       <!-- Daily Schedule -->
       <div class="card" style="margin-bottom:1.5rem;">
-        <div class="card-title"><span class="icon">📅</span> Your Weekly Study Plan (July 14 - Aug 2)</div>
+        <div class="card-title"><span class="icon">📅</span> Your Revision Plan (Aug 16 - Sep 6)</div>
 
-        <div class="schedule-day">
-          <div class="schedule-day-label">⚡ Weekdays (Mon-Fri) — 90 mins max</div>
-          <div class="schedule-slot">
-            <span class="slot-time">Before Work (if commute day)</span>
-            <span class="slot-desc">
-              <input type="checkbox" style="margin-right: 8px;"> Quick 15-min review on commute (2 days/week with 30 min travel) <span class="slot-badge badge-faq">REVIEW</span>
-            </span>
-          </div>
-          <div class="schedule-slot">
-            <span class="slot-time">After Work: 7 PM - 8:30 PM (~90m)</span>
-            <span class="slot-desc">
-              <input type="checkbox" style="margin-right: 8px;"> Review slides for 1 AWS service (15 min) <span class="slot-badge badge-slides">SLIDES</span><br>
-              <input type="checkbox" style="margin-right: 8px;"> Read FAQ for that service (30 min) <span class="slot-badge badge-faq">FAQ</span><br>
-              <input type="checkbox" style="margin-right: 8px;"> Practice quiz for that topic (45 min, aim 90%+) <span class="slot-badge badge-quiz">QUIZ</span>
-            </span>
-          </div>
-          <div class="schedule-slot">
-            <span class="slot-time">Note:</span>
-            <span class="slot-desc">Job ends 5 PM → 2 hrs dinner prep/family → Study at 7 PM. Adjust as needed!</span>
-          </div>
+        <div class="schedule-picker">
+          <label for="scheduleDay">📆 Day:</label>
+          <select id="scheduleDay" onchange="renderSchedule()">
+            <option value="weekdays">⚡ Weekdays (Mon-Fri)</option>
+            <option value="saturday">🏖️ Saturday</option>
+            <option value="sunday">🏖️ Sunday</option>
+          </select>
         </div>
 
-        <div class="schedule-day">
-          <div class="schedule-day-label">🏖️ Weekends (Sat-Sun) — 3 hours in fractions</div>
-          <div class="schedule-slot">
-            <span class="slot-time">Morning (Sat): 1.5-2 Hours</span>
-            <span class="slot-desc">
-              <input type="checkbox" style="margin-right: 8px;"> Deep dive: 1-2 weak/complex services <span class="slot-badge badge-slides">SLIDES</span><br>
-              <input type="checkbox" style="margin-right: 8px;"> Read FAQs for those services <span class="slot-badge badge-faq">FAQ</span>
-            </span>
-          </div>
-          <div class="schedule-slot">
-            <span class="slot-time">Afternoon (Sat): 1-1.5 Hours</span>
-            <span class="slot-desc">
-              <input type="checkbox" style="margin-right: 8px;"> Full 65-question practice exam (mock) <span class="slot-badge badge-mock">MOCK</span>
-            </span>
-          </div>
-          <div class="schedule-slot">
-            <span class="slot-time">Sunday: 1.5 Hours</span>
-            <span class="slot-desc">
-              <input type="checkbox" style="margin-right: 8px;"> Deep analysis: Review all wrong answers + read explanations <span class="slot-badge badge-faq">FAQ</span><br>
-              <input type="checkbox" style="margin-right: 8px;"> Quick quiz on weak topics (aim 90%+) <span class="slot-badge badge-quiz">QUIZ</span>
-            </span>
-          </div>
-        </div>
+        <div id="schedule-cards"></div>
       </div>
 
       <!-- Tips -->
       <div class="card">
         <div class="card-title"><span class="icon">💡</span> Study Tips & FAQ Strategy</div>
-        <div class="tip-box"><strong>📖 How to Use FAQs:</strong> After learning each service's slides, read the official AWS FAQ (30 min/service). These FAQs have real-world Q&A that often appear on exams!</div>
-        <div class="tip-box"><strong>🗓️ Timeline:</strong> July 14-27: Learn topics + FAQs. July 28-Aug 2: Mock exams & review weak areas. Aug 3: Exam day!</div>
+        <div class="tip-box"><strong>📖 How to Use FAQs:</strong> After watching each service's video, read the official AWS FAQ (30 min/service). These FAQs have real-world Q&A that often appear on exams!</div>
+        <div class="tip-box"><strong>🗓️ Timeline:</strong> Aug 16-23: Rapid re-learn + active recall of all topics. Aug 24-30: Practice exams & weak-area focus. Aug 31-Sep 6: Final review, mocks & rest. Sep 7: Exam day!</div>
         <div class="tip-box"><strong>⏱ During Exam:</strong> 130 minutes, 65 questions (~2 min/question). Flag hard ones, skip, return at end.</div>
         <div class="tip-box"><strong>🎯 Passing Score:</strong> 720/1000. Focus on: Development, Deployment, Security domains.</div>
         <div class="tip-box"><strong>🧠 Strategy:</strong> Eliminate 2 wrong answers first, pick between remaining two. Read questions carefully!</div>
         <div class="tip-box"><strong>📱 Commute Hack (2 days/week):</strong> 30-min commute = Perfect FAQ review time! Use browser to read AWS FAQs on your phone.</div>
         <div class="tip-box"><strong>✅ Daily Checklist:</strong> Check off each task as you complete it. Keeps you on track!</div>
-        <div class="tip-box"><strong>😴 Before Exam (Aug 2 evening):</strong> Light review only (30 min). Get 8 hours sleep!</div>
+        <div class="tip-box"><strong>😴 Before Exam (Sep 6 evening):</strong> Light review only (30 min). Get 8 hours sleep!</div>
       </div>
     </div>
 
@@ -332,8 +395,8 @@
         <!-- Phase 1 -->
         <div class="phase-section">
           <div class="phase-header">
-            <span class="phase-title phase-1">📖 Phase 1: Learn Topics + FAQs</span>
-            <span class="phase-badge phase-badge-1">July 14 – July 28 · 2 Weeks</span>
+            <span class="phase-title phase-1">📖 Phase 1: Rapid Re-Learn + Active Recall</span>
+            <span class="phase-badge phase-badge-1">Aug 16 – Aug 23 · 1 Week</span>
           </div>
           <div id="checklist-phase1"></div>
         </div>
@@ -342,7 +405,7 @@
         <div class="phase-section">
           <div class="phase-header">
             <span class="phase-title phase-2">🧪 Phase 2: Mock Exams & Weak Area Review</span>
-            <span class="phase-badge phase-badge-2">July 28 – Aug 1 · 4-5 Days</span>
+            <span class="phase-badge phase-badge-2">Aug 24 – Aug 30 · 1 Week</span>
           </div>
           <div id="checklist-phase2"></div>
         </div>
@@ -350,8 +413,8 @@
         <!-- Phase 3 -->
         <div class="phase-section">
           <div class="phase-header">
-            <span class="phase-title phase-3">✨ Phase 3: Final Light Review + Rest</span>
-            <span class="phase-badge phase-badge-3">Aug 1-2 · 2 Days</span>
+            <span class="phase-title phase-3">✨ Phase 3: Final Review + Rest</span>
+            <span class="phase-badge phase-badge-3">Aug 31 – Sep 6 · 1 Week</span>
           </div>
           <div id="checklist-phase3"></div>
         </div>
@@ -370,6 +433,46 @@
         </div>
         <div id="syncStatus"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- ==================== REVISION STRATEGY ==================== -->
+  <div class="revision-section">
+    <div class="card">
+      <div class="card-title"><span class="icon">🧠</span> How to Revise & Remember (Industry Best Practice)</div>
+      <p style="font-size:0.85rem;color:var(--text2);margin-bottom:1rem;line-height:1.6;">
+        You learned this in April and forgot it — that's normal. The brain forgets ~50% of new info within a day unless you actively retrieve it.
+        These are the evidence-based techniques (from cognitive science) that make revision stick. Use them every single day.
+      </p>
+      <div class="revision-grid">
+        <div>
+          <div class="tech-item"><span class="tech-icon">🔁</span><div><div class="tech-title">Spaced Repetition</div><div class="tech-desc">Review a topic on Day 1, then Day 3, then Day 7, then Day 14. Each review resets the forgetting curve. Don't cram — space it out. This is the #1 most effective technique.</div></div></div>
+          <div class="tech-item"><span class="tech-icon">🧩</span><div><div class="tech-title">Active Recall (not re-reading)</div><div class="tech-desc">Close the notes and force yourself to write/say what you remember. Re-reading feels productive but does almost nothing. Testing yourself is what builds memory.</div></div></div>
+          <div class="tech-item"><span class="tech-icon">🗣️</span><div><div class="tech-title">Feynman Technique</div><div class="tech-desc">Explain a concept out loud in plain English as if teaching a beginner. If you can't explain it simply, you don't understand it yet. Find the gap, re-learn, repeat.</div></div></div>
+          <div class="tech-item"><span class="tech-icon">🔀</span><div><div class="tech-title">Interleaving</div><div class="tech-desc">Mix different topics in one session instead of studying one topic for hours. It forces your brain to discriminate between concepts — exactly what the exam does.</div></div></div>
+          <div class="tech-item"><span class="tech-icon">❓</span><div><div class="tech-title">Elaborative Interrogation</div><div class="tech-desc">Ask "why does this work this way?" for every fact. Connecting new info to what you already know makes it far more memorable than rote memorization.</div></div></div>
+        </div>
+        <div>
+          <div class="tech-item"><span class="tech-icon">📝</span><div><div class="tech-title">Practice Testing</div><div class="tech-desc">Do real questions, not just reading. Every wrong answer is a gift — it shows exactly what to fix. Review explanations thoroughly, not just the right letter.</div></div></div>
+          <div class="tech-item"><span class="tech-icon">🃏</span><div><div class="tech-title">Flashcards (Anki-style)</div><div class="tech-desc">Turn every FAQ fact and cheat-sheet line into a Q&A card. Review them on your commute. Anki automates spaced repetition for you.</div></div></div>
+          <div class="tech-item"><span class="tech-icon">✍️</span><div><div class="tech-title">Write It Down</div><div class="tech-desc">Hand-write key facts, diagrams, and mnemonics. The physical act of writing strengthens memory encoding far more than typing or reading.</div></div></div>
+          <div class="tech-item"><span class="tech-icon">⏱️</span><div><div class="tech-title">Pomodoro Focus</div><div class="tech-desc">Study in 25-min focused blocks with 5-min breaks. Your brain consolidates during breaks. 3-4 focused blocks beat 3 hours of distracted scrolling.</div></div></div>
+          <div class="tech-item"><span class="tech-icon">😴</span><div><div class="tech-title">Sleep & Consolidation</div><div class="tech-desc">Memory is consolidated during sleep. 7-8 hours nightly is non-negotiable. Never pull an all-nighter before the exam — it destroys recall.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DAILY NON-NEGOTIABLE TASKS ==================== -->
+  <div class="revision-section">
+    <div class="card">
+      <div class="card-title"><span class="icon">🔥</span> Daily Non-Negotiable Tasks (Do These Every Day, No Exceptions)</div>
+      <p style="font-size:0.85rem;color:var(--text2);margin-bottom:0.75rem;line-height:1.6;">
+        These are the minimum daily habits that guarantee you stay sharp from Aug 16 to Sep 7. They are <strong>not optional</strong> — skip one and you fall behind.
+        Tick them off each day. Total: ~60-75 minutes, plus your scheduled topic work above.
+      </p>
+      <div id="dailyTasks"></div>
+      <div class="daily-note"><strong>🚨 The Rule:</strong> If you only have 30 minutes in a day, do the <strong>Active Recall</strong> and <strong>10 practice questions</strong> tasks first — they give the most memory value per minute. Never skip a full day. Missing one day is a slip; missing two is a pattern. You said you don't want to fail this time — this is how you don't.</div>
     </div>
   </div>
 </div>
@@ -590,40 +693,108 @@ const services = [
 
 const checklists = {
   phase1: [
-    { id: "p1_1", text: "IAM slides (15m) + FAQ (30m) + Quiz (45m)", meta: "Tue July 14 · 90 mins" },
-    { id: "p1_2", text: "EC2 slides + EC2 FAQ (30m each day this week)", meta: "Wed-Thu July 15-16 · 30 mins each" },
-    { id: "p1_3", text: "EBS & Storage FAQ review (on commute if available)", meta: "Fri July 17 · FAQ link in Services table" },
-    { id: "p1_4", text: "Weekend Study: S3 deep dive (slides 45m + FAQ 45m)", meta: "Sat July 20 · 90 mins" },
-    { id: "p1_5", text: "S3 Quiz practice + CloudFront FAQ review", meta: "Sat July 20 afternoon · 60 mins" },
-    { id: "p1_6", text: "RDS & Database FAQ (read during commute 2 days)", meta: "Mon-Fri July 21-24" },
-    { id: "p1_7", text: "Lambda deep dive: slides (20m) + FAQ (40m) + quiz (30m)", meta: "Tue July 21 · 90 mins" },
-    { id: "p1_8", text: "API Gateway FAQ + DynamoDB intro (split 2 days)", meta: "Wed-Thu July 22-23 · 45 mins each" },
-    { id: "p1_9", text: "Messaging services: SQS/SNS/Kinesis FAQ marathon", meta: "Fri July 24 commute · 30 mins" },
-    { id: "p1_10", text: "Weekend: Serverless review (ECS, Lambda, Fargate FAQs)", meta: "Sat July 27 · 90 mins" },
-    { id: "p1_11", text: "Deployment services: CodePipeline, CodeDeploy FAQs", meta: "Sat July 27 · 60 mins" },
-    { id: "p1_12", text: "Security services review: IAM, KMS, Secrets Manager FAQs", meta: "Sun July 28 · 60 mins" },
-    { id: "p1_13", text: "VPC, Route 53, CloudFront FAQ deep review", meta: "Sun July 28 · 60 mins" },
+    { id: "p1_1", text: "IAM + EC2 active recall: video (15m) + FAQ (30m) + quiz (45m)", meta: "Sun Aug 16 · 90 mins" },
+    { id: "p1_2", text: "EBS + S3 active recall: video + FAQ + quiz", meta: "Mon Aug 17 · 90 mins" },
+    { id: "p1_3", text: "RDS + ElastiCache active recall: video + FAQ + quiz", meta: "Tue Aug 18 · 90 mins" },
+    { id: "p1_4", text: "Lambda + API Gateway active recall: video + FAQ + quiz", meta: "Wed Aug 19 · 90 mins" },
+    { id: "p1_5", text: "DynamoDB + SQS/SNS active recall: video + FAQ + quiz", meta: "Thu Aug 20 · 90 mins" },
+    { id: "p1_6", text: "Deployment: CodePipeline, CodeDeploy, CloudFormation, ECS/Fargate", meta: "Fri Aug 21 · 90 mins" },
+    { id: "p1_7", text: "Security: IAM, KMS, Secrets Manager, Cognito, WAF", meta: "Sat Aug 22 · 90 mins" },
+    { id: "p1_8", text: "Networking: VPC, Route 53, CloudFront + full-topic review", meta: "Sun Aug 23 · 90 mins" },
   ],
   phase2: [
-    { id: "p2_1", text: "First 65-question practice exam (untimed, no pressure)", meta: "Mon July 28 weekend · ~90 mins" },
-    { id: "p2_2", text: "Deep analysis: wrong answers + read all explanations", meta: "Mon July 28 · ~60 mins" },
-    { id: "p2_3", text: "Identify bottom 3-5 weakest topics from exam", meta: "Tue July 29 · 20 mins" },
-    { id: "p2_4", text: "Re-read FAQs for bottom 3 topics (use Page 1 links)", meta: "Tue July 29 + Wed July 30 · 30m each day" },
-    { id: "p2_5", text: "Second timed exam (130 min, target 75%+)", meta: "Thu July 31 · ~2 hours" },
-    { id: "p2_6", text: "Detailed review of second exam wrong answers", meta: "Thu July 31 · 60 mins" },
-    { id: "p2_7", text: "Third timed practice exam (focus on weak domains)", meta: "Fri Aug 1 morning · ~2 hours" },
-    { id: "p2_8", text: "Review 3rd exam + AWS Well-Architected Framework", meta: "Fri Aug 1 · 60 mins" },
+    { id: "p2_1", text: "First 65-question practice exam (untimed, no pressure)", meta: "Mon Aug 24 · ~90 mins" },
+    { id: "p2_2", text: "Deep analysis: wrong answers + read all explanations", meta: "Tue Aug 25 · ~60 mins" },
+    { id: "p2_3", text: "Identify bottom 3-5 weakest topics from exam", meta: "Wed Aug 26 · 20 mins" },
+    { id: "p2_4", text: "Re-read FAQs for bottom 3 topics (use Services links)", meta: "Wed Aug 26 + Thu Aug 27 · 30m each day" },
+    { id: "p2_5", text: "Second timed exam (130 min, target 75%+)", meta: "Fri Aug 28 · ~2 hours" },
+    { id: "p2_6", text: "Detailed review of second exam wrong answers", meta: "Sat Aug 29 · 60 mins" },
+    { id: "p2_7", text: "Third timed practice exam (focus on weak domains)", meta: "Sun Aug 30 morning · ~2 hours" },
+    { id: "p2_8", text: "Review 3rd exam + AWS Well-Architected Framework", meta: "Sun Aug 30 · 60 mins" },
   ],
   phase3: [
-    { id: "p3_1", text: "Compile list of 10 most confusing exam concepts", meta: "Fri Aug 1 · 30 mins" },
-    { id: "p3_2", text: "Quick FAQ review of those 10 topics (use Page 1 links)", meta: "Fri Aug 1 · 30 mins" },
-    { id: "p3_3", text: "Light review: cheat sheets for top weak domains only", meta: "Sat Aug 2 · 45 mins" },
-    { id: "p3_4", text: "Quick 20-question timed quiz (target 90%+)", meta: "Sat Aug 2 · 25 mins" },
-    { id: "p3_5", text: "Relax! No heavy study. Light confidence building only.", meta: "Sat Aug 2 · 30 mins max" },
-    { id: "p3_6", text: "Early dinner, get 8+ hours sleep before exam!", meta: "Sat Aug 2 evening" },
-    { id: "p3_7", text: "Exam Day - You got this! 💪", meta: "Sun Aug 3 · Early morning" },
+    { id: "p3_1", text: "Compile list of 10 most confusing exam concepts", meta: "Mon Aug 31 · 30 mins" },
+    { id: "p3_2", text: "Quick FAQ review of those 10 topics (use Services links)", meta: "Tue Sep 1 · 30 mins" },
+    { id: "p3_3", text: "Light review: cheat sheets for top weak domains only", meta: "Wed Sep 2 · 45 mins" },
+    { id: "p3_4", text: "Quick 20-question timed quiz (target 90%+)", meta: "Thu Sep 3 · 25 mins" },
+    { id: "p3_5", text: "Relax! No heavy study. Light confidence building only.", meta: "Fri Sep 4 · 30 mins max" },
+    { id: "p3_6", text: "Light review only (30 min). No new material.", meta: "Sat Sep 5 · 30 mins" },
+    { id: "p3_7", text: "Early dinner, get 8+ hours sleep before exam!", meta: "Sun Sep 6 evening" },
+    { id: "p3_8", text: "Exam Day - You got this! 💪", meta: "Mon Sep 7 · Early morning" },
   ],
 };
+
+// ===================== DAILY NON-NEGOTIABLE TASKS =====================
+const dailyTasks = [
+  { id: "dt_1", text: "Active Recall: close notes, write/say everything you remember about today's topic", meta: "15 min · highest value" },
+  { id: "dt_2", text: "10 practice questions (use the Practice Exam page, 10-question mode)", meta: "20 min · non-negotiable" },
+  { id: "dt_3", text: "Review every wrong answer + read the explanation", meta: "10 min · this is where you learn" },
+  { id: "dt_4", text: "Flashcards: review yesterday's + today's facts (Anki or written)", meta: "10 min · spaced repetition" },
+  { id: "dt_5", text: "Feynman: explain today's topic out loud in plain English", meta: "5 min · find the gaps" },
+  { id: "dt_6", text: "Sleep 7-8 hours tonight (memory consolidates while you sleep)", meta: "non-negotiable" },
+];
+
+function renderDailyTasks() {
+  const container = document.getElementById('dailyTasks');
+  container.innerHTML = '';
+  dailyTasks.forEach(item => {
+    const checked = localStorage.getItem(item.id) === 'true';
+    container.innerHTML += `
+      <div class="daily-task ${checked ? 'done' : ''}" id="wrap-${item.id}">
+        <input type="checkbox" id="${item.id}" ${checked ? 'checked' : ''} onchange="toggleDailyTask('${item.id}')">
+        <div>
+          <label for="${item.id}">${item.text}</label>
+          <div class="task-meta">${item.meta}</div>
+        </div>
+      </div>`;
+  });
+}
+
+function toggleDailyTask(id) {
+  const cb = document.getElementById(id);
+  localStorage.setItem(id, cb.checked);
+  document.getElementById(`wrap-${id}`).classList.toggle('done', cb.checked);
+}
+
+// ===================== DAILY SCHEDULE (day picker) =====================
+const scheduleDays = {
+  weekdays: {
+    label: "⚡ Weekdays (Mon-Fri) — 90 mins max",
+    cards: [
+      { time: "Before Work (if commute day)", html: `<input type="checkbox" style="margin-right: 8px;"> Flashcards + FAQ review on commute (spaced repetition) <span class="slot-badge badge-faq">REVIEW</span>` },
+      { time: "After Work: 7 PM - 8:30 PM (~90m)", html: `<input type="checkbox" style="margin-right: 8px;"> Active recall: write/say what you remember about today's topic (15 min) <span class="slot-badge badge-quiz">RECALL</span><br><input type="checkbox" style="margin-right: 8px;"> Watch today's topic video + read FAQ (30 min) <span class="slot-badge badge-video">VIDEO</span><br><input type="checkbox" style="margin-right: 8px;"> Practice quiz for that topic (45 min, aim 90%+) <span class="slot-badge badge-quiz">QUIZ</span>` },
+      { time: "Note:", html: `Job ends 5 PM → 2 hrs dinner prep/family → Study at 7 PM. Adjust as needed!` }
+    ]
+  },
+  saturday: {
+    label: "🏖️ Saturday — 3 hours in fractions",
+    cards: [
+      { time: "Morning (Sat): 1.5-2 Hours", html: `<input type="checkbox" style="margin-right: 8px;"> Deep dive: 1-2 weak/complex services (watch video + active recall + Feynman) <span class="slot-badge badge-video">VIDEO</span><br><input type="checkbox" style="margin-right: 8px;"> Read FAQs for those services <span class="slot-badge badge-faq">FAQ</span>` },
+      { time: "Afternoon (Sat): 1-1.5 Hours", html: `<input type="checkbox" style="margin-right: 8px;"> Full 65-question practice exam (mock) <span class="slot-badge badge-mock">MOCK</span>` }
+    ]
+  },
+  sunday: {
+    label: "🏖️ Sunday — 1.5 Hours",
+    cards: [
+      { time: "Sunday: 1.5 Hours", html: `<input type="checkbox" style="margin-right: 8px;"> Deep analysis: Review all wrong answers + read explanations <span class="slot-badge badge-faq">FAQ</span><br><input type="checkbox" style="margin-right: 8px;"> Quick quiz on weak topics (aim 90%+) <span class="slot-badge badge-quiz">QUIZ</span>` }
+    ]
+  }
+};
+
+function renderSchedule() {
+  const day = document.getElementById('scheduleDay').value;
+  const data = scheduleDays[day];
+  const container = document.getElementById('schedule-cards');
+  container.innerHTML = `
+    <div class="schedule-day">
+      <div class="schedule-day-label">${data.label}</div>
+      ${data.cards.map(c => `
+        <div class="schedule-slot">
+          <span class="slot-time">${c.time}</span>
+          <span class="slot-desc">${c.html}</span>
+        </div>`).join('')}
+    </div>`;
+}
 
 // ===================== SERVICES TABLE =====================
 let currentFilter = 'all';
@@ -647,6 +818,10 @@ function renderServices() {
     const matchSearch = !query || s.name.toLowerCase().includes(query) || s.keywords.some(k => k.toLowerCase().includes(query));
     return matchType && matchSearch;
   });
+
+  queueList = filtered;
+  if (queueIndex >= queueList.length) queueIndex = 0;
+  renderQueue();
 
   filtered.forEach(s => {
     const typeTag = s.type === 'serverless' ? `<span class="tag tag-sl">⚡ Serverless</span>` :
@@ -713,6 +888,93 @@ function toggleCheat(id) {
   btn.textContent = el.classList.contains('open') ? '📝 Hide' : '📝 Show';
 }
 
+// ===================== MOBILE QUEUE CARD =====================
+let queueList = [];
+let queueIndex = 0;
+
+function renderQueue() {
+  const select = document.getElementById('queueSelect');
+  select.innerHTML = queueList.map((s, i) => `<option value="${i}">${i + 1}. ${s.name}</option>`).join('');
+  if (queueIndex >= queueList.length) queueIndex = 0;
+  select.value = queueIndex;
+  renderQueueCard();
+}
+
+function renderQueueCard() {
+  const card = document.getElementById('queueCard');
+  const counter = document.getElementById('queueCounter');
+  if (!queueList.length) {
+    card.innerHTML = '<div style="color:var(--text2);text-align:center;padding:1rem;">No topics match your filter.</div>';
+    counter.textContent = '';
+    return;
+  }
+  const s = queueList[queueIndex];
+  const typeTag = s.type === 'serverless' ? `<span class="tag tag-sl">⚡ Serverless</span>` :
+                 s.type === 'non-serverless' ? `<span class="tag tag-nsl">🖥️ Non-Serverless</span>` :
+                 `<span class="tag tag-both">🔀 Both</span>`;
+  const chips = s.keywords.map(k => `<span class="keyword-chip">${k}</span>`).join('');
+  const cheatItems = s.cheat.map(c => `<li>${c}</li>`).join('');
+  const cheatId = `queue-cheat-${s.name.replace(/\s/g, '')}`;
+  card.innerHTML = `
+    <div class="queue-card-header">
+      <span class="queue-card-name">${s.name}</span>
+      ${typeTag}
+    </div>
+    <div class="queue-card-section">
+      <div class="queue-card-section-label">📌 Exam Keywords</div>
+      <div class="keywords">${chips}</div>
+    </div>
+    <div class="queue-card-actions">
+      <a class="queue-card-faq-btn" href="${s.faq}" target="_blank" rel="noopener">📖 Open FAQ ↗</a>
+      <button class="queue-card-cheat-btn" onclick="toggleQueueCheat('${cheatId}', this)">📝 Cheat Sheet</button>
+    </div>
+    <div class="queue-card-cheat-body" id="${cheatId}"><ul>${cheatItems}</ul></div>`;
+  counter.textContent = `Topic ${queueIndex + 1} of ${queueList.length}`;
+}
+
+function toggleQueueCheat(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  btn.textContent = el.classList.contains('open') ? '📝 Hide' : '📝 Cheat Sheet';
+}
+
+function queueSelect() {
+  queueIndex = parseInt(document.getElementById('queueSelect').value) || 0;
+  renderQueueCard();
+}
+
+function queueNext() {
+  if (!queueList.length) return;
+  queueIndex = (queueIndex + 1) % queueList.length;
+  renderQueue();
+}
+
+function queuePrev() {
+  if (!queueList.length) return;
+  queueIndex = (queueIndex - 1 + queueList.length) % queueList.length;
+  renderQueue();
+}
+
+function queueShuffle() {
+  for (let i = queueList.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [queueList[i], queueList[j]] = [queueList[j], queueList[i]];
+  }
+  queueIndex = 0;
+  renderQueue();
+}
+
+// ===================== SIDE NAV =====================
+function toggleSidebar() {
+  document.getElementById('sideNav').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+function closeSidebar() {
+  document.getElementById('sideNav').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
 // ===================== CHECKLISTS =====================
 function renderChecklists() {
   ['phase1', 'phase2', 'phase3'].forEach(phase => {
@@ -742,9 +1004,9 @@ function toggleCheck(id) {
 
 function updateProgress() {
   const phases = [
-    { key: 'phase1', label: '📘 Phase 1: Slide Mastery (Jun 27-Jul 13)' },
-    { key: 'phase2', label: '🧪 Phase 2: Mock Exams (Jul 14-21)' },
-    { key: 'phase3', label: '🔍 Phase 3: Revision (Jul 22-28)' }
+    { key: 'phase1', label: '📘 Phase 1: Rapid Re-Learn (Aug 16-23)' },
+    { key: 'phase2', label: '🧪 Phase 2: Mock Exams (Aug 24-30)' },
+    { key: 'phase3', label: '🔍 Phase 3: Final Review (Aug 31-Sep 6)' }
   ];
   let done = 0, total = 0;
   let html = '';
@@ -765,7 +1027,7 @@ function updateProgress() {
 
 // ===================== COUNTDOWN =====================
 function updateCountdown() {
-  const target = new Date('2026-08-03T09:00:00');
+  const target = new Date('2026-09-07T09:00:00');
   const now = new Date();
   const diff = target - now;
   if (diff <= 0) {
@@ -884,8 +1146,10 @@ function showCurrentGistId() {
 function showPage(page, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.side-nav-link').forEach(t => t.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   el.classList.add('active');
+  closeSidebar();
 }
 
 // ===================== INIT =====================
@@ -907,6 +1171,8 @@ window.onload = async () => {
   document.body.style.visibility = 'visible';
   renderServices();
   renderChecklists();
+  renderDailyTasks();
+  renderSchedule();
   updateCountdown();
   setInterval(updateCountdown, 1000);
 };
